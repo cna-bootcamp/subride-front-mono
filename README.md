@@ -159,10 +159,11 @@ export default apiInstance;
 ```javascript
 import api from "../utils/apiInstance";
 
-const getBooks = async () => {
+const getUser = async (userId) => {
   try {
-    const { data } = await api.get("kkubooks/bookshelf/booklist/");
-    return data.map((bookObj) => snakeToCamel(bookObj));
+    const { data } = await api.get("/users", { params: { id: userId } });
+    console.log(data);
+    return data;
   } catch (err) {
     return err;
   }
@@ -174,7 +175,7 @@ const addBook = async (bookId, userId) => {
       book: bookId,
       user: userId,
     });
-    return snakeToCamel(data);
+    return data;
   } catch (err) {
     return err;
   }
