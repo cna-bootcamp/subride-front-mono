@@ -1,70 +1,60 @@
-# Getting Started with Create React App
+## API 규정
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+### Base URL
 
-## Available Scripts
+```javascript
+import axios from "axios";
 
-In the project directory, you can run:
+export const API_BASE_URL = "http://gudokjoa5.165.192.105.60.nip.io";
 
-### `npm start`
+const apiInstance = axios.create({
+  baseURL: `${API_BASE_URL}`,
+  headers: {
+    "Content-type": "application/json",
+  },
+});
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+export default apiInstance;
+```
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+### 활용 예시
 
-### `npm test`
+```javascript
+import api from "../utils/apiInstance";
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+const getBooks = async () => {
+  try {
+    const { data } = await api.get("kkubooks/bookshelf/booklist/");
+    return data.map((bookObj) => snakeToCamel(bookObj));
+  } catch (err) {
+    return err;
+  }
+};
 
-### `npm run build`
+const addBook = async (bookId, userId) => {
+  try {
+    const { data } = await api.post("kkubooks/bookshelf/", {
+      book: bookId,
+      user: userId,
+    });
+    return snakeToCamel(data);
+  } catch (err) {
+    return err;
+  }
+};
+```
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+## code convention
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+- 제목은 50자 이내, 소문자 작성, 마침표 붙이지 않는다.
+- subject종류 : [back/front] 대괄호 안에 back/front 구분 표시한다.
+  ex. feat: 로그인
+- **feat** : 새로운 기능에 대한 커밋
+- **fix** : 버그 수정에 대한 커밋
+- **build** : 빌드 관련 파일 수정에 대한 커밋
+- **chore** : 그 외 자잘한 수정에 대한 커밋(기타변경)
+- **ci** : CI 관련 설정 수정에 대한 커밋
+- **docs** : 문서 수정에 대한 커밋
+- **style** : 코드 스타일 혹은 포맷 등에 관한 커밋
+- **refactor** : 코드 리팩토링에 대한 커밋
+- **test** : 테스트 코드 수정에 대한 커밋
