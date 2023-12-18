@@ -1,3 +1,21 @@
+## Directory 구조
+
+```
+Frontend
+|_deployment
+|_public
+|_src
+    |_assets
+    |_common
+    |_utils
+        |_apiInstance.js
+    |_pages
+        |_main.jsx
+    |_components
+        |_main.jsx
+
+```
+
 ## FRONT CODE CONVENTION
 
 🎨
@@ -67,7 +85,7 @@ Remove a dependency.
 
 🔧
 :wrench:
-구성 파일 추가
+구성 파일 추가/ 디렉토리 추가
 Add or update configuration files.
 
 🔨
