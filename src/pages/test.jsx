@@ -1,4 +1,4 @@
-import BackHeader from "../commmon/backHeader";
+import BackHeader from "../common/backHeader";
 
 function Test() {
   return (
