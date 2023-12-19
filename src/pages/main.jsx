@@ -1,5 +1,4 @@
 import { useState } from "react";
-import Navigation from "../common/navigation";
 import bankbookImage from "../assets/bankbook.png";
 import styled from "@emotion/styled";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
@@ -152,7 +151,6 @@ function Main() {
           <div className="image-box-recommend"></div>
         </div>
       </SubContainer>
-      <Navigation />
       <CustomModal isOpen={isModalOpen} closeModal={closeModal}>
         <ModalContent>
           <p>새로운 썹</p>
