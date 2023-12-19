@@ -3,6 +3,8 @@ import Autocomplete from "@mui/material/Autocomplete";
 import Stack from "@mui/material/Stack";
 import Box from "@mui/material/Box";
 import Header from "../common/header";
+import CommonButton from "../common/commonButton";
+import Navigation from "../common/navigation";
 
 const accountList = [
   { content: "018302-04-12345 : KB마이핏통장" },
@@ -99,6 +101,8 @@ function MakeGroup() {
           />
         </Stack>
       </Box>
+      <CommonButton text="방 만들기"></CommonButton>
+      <Navigation></Navigation>
     </>
   );
 }
