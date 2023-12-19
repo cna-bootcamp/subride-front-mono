@@ -2,7 +2,7 @@ import TextField from "@mui/material/TextField";
 import Autocomplete from "@mui/material/Autocomplete";
 import Stack from "@mui/material/Stack";
 import Box from "@mui/material/Box";
-import Header from "../commmon/header";
+import Header from "../common/header";
 
 const accountList = [
   { content: "018302-04-12345 : KB마이핏통장" },
