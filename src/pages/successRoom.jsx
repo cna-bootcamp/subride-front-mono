@@ -16,7 +16,14 @@ function SuccessRoom() {
           justifyContent: "center",
         }}
       >
-        <Box sx={{ width: "100%", textAlign: "center", fontSize: "26px" }}>
+        <Box
+          sx={{
+            width: "100%",
+            textAlign: "center",
+            fontSize: "26px",
+            color: "#999999",
+          }}
+        >
           방이 생성 됐어요
         </Box>
         <Box
