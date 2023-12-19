@@ -1,9 +1,20 @@
+import { useState } from "react";
 import Navigation from "../common/navigation";
 import bankbookImage from "../assets/bankbook.png";
 import styled from "@emotion/styled";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
+import GroupAddIcon from "@mui/icons-material/GroupAdd";
+import KeyIcon from "@mui/icons-material/Key";
+import AddIcon from "@mui/icons-material/Add";
+import CustomModal from "../components/main/CustomModal";
+import { Button } from "@mui/material";
 
 function Main() {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const closeModal = () => {
+    setIsModalOpen(false);
+  };
+
   const BankbookContainer = styled.div`
     text-align: center;
 
@@ -40,6 +51,12 @@ function Main() {
     font-size: 20px;
     width: 100%;
 
+    .display-flex {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
     p {
       margin: 0px;
     }
@@ -75,7 +92,19 @@ function Main() {
     }
   `;
 
-  //#f8f9fa #f1f3f5
+  const ModalContent = styled.div`
+    text-align: center;
+
+    p {
+      margin: 3%;
+      font-size: 15px;
+    }
+
+    .button-box {
+      display: flex;
+      padding: 3%;
+    }
+  `;
 
   return (
     <>
@@ -89,7 +118,12 @@ function Main() {
         </div>
       </BankbookContainer>
       <SubContainer>
-        <p className="title">썹 타는 중~</p>
+        <div className="display-flex">
+          <p className="title">썹 타는 중~</p>
+          <Button onClick={() => setIsModalOpen(true)}>
+            <AddIcon sx={{ fontSize: "25px", color: "#F2DC14" }} />
+          </Button>
+        </div>
         <div className="images">
           <div className="image-box"></div>
           <div className="image-box"></div>
@@ -119,6 +153,19 @@ function Main() {
         </div>
       </SubContainer>
       <Navigation />
+      <CustomModal isOpen={isModalOpen} closeModal={closeModal}>
+        <ModalContent>
+          <p>새로운 썹</p>
+          <div className="button-box">
+            <Button sx={{ width: "100%", color: "#4A4646" }}>
+              <GroupAddIcon sx={{ marginRight: "10px" }} />썹 만들기
+            </Button>
+            <Button sx={{ width: "100%", color: "#4A4646" }}>
+              <KeyIcon sx={{ marginRight: "10px" }} />썹 참여하기
+            </Button>
+          </div>
+        </ModalContent>
+      </CustomModal>
     </>
   );
 }
