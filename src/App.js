@@ -4,6 +4,7 @@ import Sub from "./pages/sub";
 import Test from "./pages/test";
 import MakeGroup from "./pages/makeGroup";
 import SuccessRoom from "./pages/successRoom";
+import ComeGroup from "./pages/comeGroup";
 import Navigation from "./common/navigation";
 
 function App() {
@@ -15,6 +16,7 @@ function App() {
         <Route path="/test" element={<Test />} />
         <Route path="/makegroup" element={<MakeGroup />} />
         <Route path="/successroom" element={<SuccessRoom />} />
+        <Route path="/comegroup" element={<ComeGroup />} />
       </Routes>
       <Navigation />
     </>
