@@ -21,6 +21,10 @@ function Navigation() {
         "& .Mui-selected, .Mui-selected > svg": {
           color: "#F2DC14",
         },
+        position: "fixed",
+        width: "100%",
+        left: "0",
+        bottom: "0",
       }}
     >
       <BottomNavigationAction
@@ -38,7 +42,7 @@ function Navigation() {
       <BottomNavigationAction
         label="구독현황"
         component={Link}
-        to="mypage"
+        to="/mypage"
         icon={<BookmarksIcon />}
       />
       <BottomNavigationAction
