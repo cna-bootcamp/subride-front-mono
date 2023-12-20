@@ -8,7 +8,7 @@ import AddIcon from "@mui/icons-material/Add";
 import CustomModal from "../components/main/CustomModal";
 import { Button } from "@mui/material";
 
-function Main() {
+function Main({ user }) {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const closeModal = () => {
     setIsModalOpen(false);
