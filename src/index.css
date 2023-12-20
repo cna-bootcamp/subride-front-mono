@@ -10,6 +10,28 @@
 }
 
 @font-face {
+  font-family: "KBFGTextL";
+  src: url("./fonts/KBFGTextL.otf") format("opentype");
+  font-weight: light;
+  font-style: light;
+  font-display: swap;
+  unicoderange: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA,
+    U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215,
+    U+FEFF;
+}
+
+@font-face {
+  font-family: "KBFGTextM";
+  src: url("./fonts/KBFGTextM.otf") format("opentype");
+  font-weight: medium;
+  font-style: medium;
+  font-display: swap;
+  unicoderange: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA,
+    U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215,
+    U+FEFF;
+}
+
+@font-face {
   font-family: "KBFGDisplayB";
   src: url("./fonts/KBFGDisplayB.otf") format("opentype");
   font-weight: bold;
@@ -33,7 +55,6 @@ body {
   margin: 0 auto;
   color: black;
   box-sizing: border-box;
-
 
   padding: 20px;
 
