@@ -14,6 +14,7 @@ function SuccessRoom() {
           display: "flex",
           flexDirection: "column",
           justifyContent: "center",
+          mt: "100px",
         }}
       >
         <Box
@@ -22,6 +23,7 @@ function SuccessRoom() {
             textAlign: "center",
             fontSize: "26px",
             color: "#999999",
+            // mb: "40px",
           }}
         >
           방이 생성 됐어요
@@ -29,15 +31,16 @@ function SuccessRoom() {
         <Box
           component="img"
           sx={{
-            height: 233,
-            width: 350,
+            height: 200,
+            display: "block",
+            margin: "50px",
           }}
           alt="Success Make Room!"
           src={successMakeRoom}
         ></Box>
       </Box>
 
-      <div>초대 코드</div>
+      <div style={{ margin: "10px", fontSize: "20px" }}>초대 코드</div>
 
       <div>
         <CopyToClipboard
@@ -51,7 +54,7 @@ function SuccessRoom() {
               justifyContent: "center",
               height: 80,
               // width: "90%",
-              // margin: "20px",
+              mb: "50px",
               borderRadius: 5,
               backgroundColor: "#F6F7FA",
             }}
