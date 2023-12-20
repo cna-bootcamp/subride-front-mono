@@ -46,9 +46,13 @@ function MakeGroup() {
           width: "100%",
           flexDirection: "column",
           justifyContent: "center",
+          marginTop: "25px",
+          marginBottom: "140px",
+          paddingLeft: "20px",
+          paddingRight: "20px",
         }}
       >
-        <Stack spacing={3}>
+        <Stack spacing={4}>
           <Autocomplete
             {...accountProps}
             id="대표계좌선택"
