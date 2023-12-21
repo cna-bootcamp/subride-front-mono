@@ -75,15 +75,15 @@ function ComeGroup() {
   return (
     <>
       <ImgAndTextContainer>
-        <div className="welcome-text">방이 생성 됐어요</div>
-        <div className="detail-text">승규님의 </div>
-        <div className="detail-text">NEFLEX 방에 초대됐습니다</div>
+        <div className="welcome-text">환영합니다</div>
+        <div className="detail-text">초대코드를 입력하고,</div>
+        <div className="detail-text">새로운 썹을 타보세요</div>
 
         <img src={comeGroupImg} alt="곰돌이" />
       </ImgAndTextContainer>
 
       <PasswordConatiner>
-        <div className="password-text">비밀번호</div>
+        <div className="password-text">초대코드</div>
 
         <input className="input-box" id="비밀번호"></input>
 
