@@ -140,6 +140,11 @@ function Main({ user }) {
     });
   }, [user.id]);
 
+  function inDetail(groupId) {
+    console.log(groupId);
+    navigate("/groupdetail", { state: groupId });
+  }
+
   return (
     <>
       <h1 style={{ fontFamily: "KBFGDisplayB" }}>Sub 탈래?</h1>
@@ -165,7 +170,11 @@ function Main({ user }) {
         </div>
         <ul className="images">
           {subGroupList.map((item) => (
-            <li key={item.id} className="image-box">
+            <li
+              key={item.id}
+              className="image-box"
+              onClick={() => inDetail(item.id)}
+            >
               <img
                 className="image-profile"
                 src={
