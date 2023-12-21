@@ -15,6 +15,8 @@ spec:
       labels:
         app: subride
     spec:
+      imagePullSecrets:
+        - name: dockerhub
       containers:
         - name: subride
           image: docker.io/jimin9707/subride:latest
