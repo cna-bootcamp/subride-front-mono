@@ -174,15 +174,15 @@ function Main({ user }) {
                 }
                 alt={item.subscribeDTO.serviceId}
               />
-              <p>{item.subscribeDTO.serviceName}</p>
+              <p>{item.groupName}</p>
             </li>
           ))}
         </ul>
       </SubContainer>
 
       <SubContainer>
-        <p className="title">이번 달 81,000원을 지출하신</p>
-        <p className="title">당신은 커피왕!</p>
+        <p className="title">이번 달 281,000원을 지출하신</p>
+        <p className="title">당신은 살림왕!</p>
         <div className="images">
           <div className="image-box-recommend"></div>
           <div className="image-box-recommend"></div>
