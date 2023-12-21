@@ -1,30 +1,35 @@
-import styled from "@emotion/styled";
-import api from "../utils/apiInstance";
-
 import * as React from "react";
 import { useEffect, useState } from "react";
+import styled from "@emotion/styled";
+import api from "../utils/apiInstance";
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
 import ListItemText from "@mui/material/ListItemText";
 import ListItemAvatar from "@mui/material/ListItemAvatar";
 import Avatar from "@mui/material/Avatar";
-import ImageIcon from "@mui/icons-material/Image";
+import AddIcon from "@mui/icons-material/Add";
 
 function SubscriptItem({ item }) {
   return (
-    <ListItem>
+    <ListItem sx={{ padding: "10px 0px" }}>
       <ListItemAvatar>
-        <Avatar>
-          <ImageIcon />
-        </Avatar>
+        <Avatar
+          src={process.env.PUBLIC_URL + `/service/${item.serviceId}.png`}
+          alt={item.serviceName}
+        />
       </ListItemAvatar>
-      <ListItemText primary={item.serviceName} secondary={`${item.fee}원`} />
+      <ListItemText
+        primary={item.serviceName}
+        secondary={`${item.fee}원`}
+        primaryTypographyProps={{ fontSize: "15px" }}
+      />
     </ListItem>
   );
 }
 const MySubscriptionPage = styled.div`
   p {
     margin: 0px;
+    font-family: KBFGTextB;
   }
 
   .title {
@@ -37,6 +42,19 @@ const MySubscriptionPage = styled.div`
     display: flex;
     justify-content: space-between;
     font-size: 20px;
+  }
+
+  .add-button {
+    display: flex;
+    align-items: center;
+    font-size: 14px;
+    background: inherit;
+    border: none;
+    box-shadow: none;
+    border-radius: 0;
+    overflow: visible;
+    cursor: pointer;
+    padding: 1rem 2rem 1rem 0;
   }
 `;
 
@@ -71,6 +89,10 @@ function MySubscription() {
           <SubscriptItem key={item.serviceId} item={item}></SubscriptItem>
         ))}
       </List>
+      <button className="add-button">
+        <AddIcon sx={{ fontSize: "1rem", marginRight: "1rem" }} />
+        <p>추가하기</p>
+      </button>
     </MySubscriptionPage>
   );
 }
