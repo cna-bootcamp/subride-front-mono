@@ -18,7 +18,7 @@ function App() {
   return (
     <>
       <Routes>
-        <Route element={<PrivateRoute isLoggedIn={user} />}>
+        <Route element={<PrivateRoute isLoggedIn={true} />}>
           <Route path="/" element={<Main user={user} />} />
           <Route path="/sub" element={<Sub />} />
           <Route path="/test" element={<Test />} />

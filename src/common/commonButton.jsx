@@ -21,10 +21,12 @@ const BootstrapButton = styled(Button)({
   },
 });
 
-function CommonButton(props) {
+function CommonButton({ text, handleClick }) {
   return (
     <>
-      <BootstrapButton variant="contained">{props.text}</BootstrapButton>
+      <BootstrapButton variant="contained" onClick={handleClick}>
+        {text}
+      </BootstrapButton>
     </>
   );
 }

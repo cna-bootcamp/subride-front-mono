@@ -5,16 +5,14 @@ import Box from "@mui/material/Box";
 import Header from "../common/header";
 import CommonButton from "../common/commonButton";
 import Navigation from "../common/navigation";
+import { useEffect, useState } from "react";
+import api from "../utils/apiInstance";
+import { useNavigate } from "react-router-dom";
 
 const accountList = [
-  { content: "018302-04-12345 : KB마이핏통장" },
+  { content: "111111-11113" },
   { content: "018302-14-12345 : KB마이핏통장" },
   { content: "018302-24-12345 : KB마이핏통장" },
-];
-const serviceList = [
-  { content: "넷플릭스" },
-  { content: "쿠팡" },
-  { content: "디즈니" },
 ];
 
 const memebernList = [{ content: "1" }, { content: "2" }, { content: "3" }];
@@ -22,7 +20,14 @@ const payDateList = [];
 
 // 문자열로 바꿔주기
 for (var i = 1; i <= 31; i++) {
-  payDateList.push({ content: i });
+  payDateList.push({ content: String(i) });
+}
+
+function makeListPropss(lists) {
+  return {
+    options: lists,
+    getOptionLabel: (option) => option.serviceName,
+  };
 }
 
 function makeListProps(lists) {
@@ -33,10 +38,67 @@ function makeListProps(lists) {
 }
 
 function MakeGroup() {
+  const navigate = useNavigate();
+  const [serviceData, setServiceData] = useState([]);
   const accountProps = makeListProps(accountList);
-  const serviceProps = makeListProps(serviceList);
+  const serviceProps = makeListPropss(serviceData);
   const membernProps = makeListProps(memebernList);
   const payDateProps = makeListProps(payDateList);
+
+  function jiminClick() {
+    var accountInput = document.getElementById("대표계좌선택").value;
+    var serviceInput = document.getElementById("서비스선택").value;
+    var membernumInput = document.getElementById("멤버수설정").value;
+    var dayInputs = document.getElementById("결제일").value;
+
+    var dayInput = parseInt(dayInputs);
+
+    console.log(accountInput);
+    console.log(serviceInput);
+    console.log(membernumInput);
+    console.log(dayInput);
+
+    const lastData = {
+      groupAccount: accountInput,
+      leaderUser: 7,
+      groupName: "지민그룹",
+      subscribeName: serviceInput,
+      billingDate: dayInput,
+    };
+    console.log(lastData);
+
+    api
+      .post("/group/create", lastData)
+      .then(function (response) {
+        console.log(response.data.invitationCode);
+        window.localStorage.setItem(
+          "invitationCode",
+          response.data.invitationCode
+        );
+        navigate("/successRoom");
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+  }
+
+  useEffect(() => {
+    const getServiceData = async (userId) => {
+      try {
+        const { data } = await api.get("/subscribe/canenroll", {
+          params: { id: userId },
+        });
+        return data;
+      } catch (err) {
+        return err;
+      }
+    };
+
+    getServiceData(3).then((result) => {
+      console.log(result);
+      setServiceData(result);
+    });
+  }, []);
 
   return (
     <>
@@ -58,30 +120,33 @@ function MakeGroup() {
             id="대표계좌선택"
             disableClearable
             renderInput={(params) => (
-              <TextField {...params} label="대표계좌선택" variant="standard" />
+              <TextField {...params} label="계좌선택" variant="standard" />
             )}
           />
           <Autocomplete
             {...serviceProps}
-            id="대표계좌선택"
+            id="서비스선택"
             disableClearable
             renderOption={(params, options) => (
-              <Box {...params} label="대표계좌선택" variant="standard">
+              <Box {...params} label="서비스" variant="standard">
                 <img
                   loading="lazy"
                   width="20"
-                  srcSet={`https://flagcdn.com/w40/ad.png 2x`}
-                  src={`https://flagcdn.com/w20/ad}.png`}
-                  alt=""
+                  srcSet={`./service/${options.serviceId}.png`}
+                  alt="로고 이미지"
+                  style={{ marginRight: "10px" }}
                 />
-                {options.content}
+
+                <div>
+                  {options.serviceName} {options.fee}
+                </div>
               </Box>
             )}
             renderInput={(params) => (
               <div>
                 <TextField
                   {...params}
-                  label="구독서비스 선택하기"
+                  label="구독서비스선택하기"
                   variant="standard"
                 />
               </div>
@@ -92,7 +157,7 @@ function MakeGroup() {
             id="멤버수설정"
             disableClearable
             renderInput={(params) => (
-              <TextField {...params} label="멤버수설정" variant="standard" />
+              <TextField {...params} label="멤버수" variant="standard" />
             )}
           />
           <Autocomplete
@@ -100,12 +165,15 @@ function MakeGroup() {
             id="결제일"
             disableClearable
             renderInput={(params) => (
-              <TextField {...params} label="결제일" variant="standard" />
+              <TextField {...params} label="결제" variant="standard" />
             )}
           />
         </Stack>
       </Box>
-      <CommonButton text="방 만들기"></CommonButton>
+      <CommonButton
+        text="방 만들기"
+        handleClick={() => jiminClick()}
+      ></CommonButton>
       <Navigation></Navigation>
     </>
   );

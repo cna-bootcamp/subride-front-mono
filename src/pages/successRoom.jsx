@@ -3,9 +3,11 @@ import successMakeRoom from "../assets/successMakeRoom.png";
 import CommonButton from "../common/commonButton";
 import CopyToClipboard from "react-copy-to-clipboard";
 import Button from "@mui/material/Button";
+import { useNavigate } from "react-router-dom";
 
 function SuccessRoom() {
-  const welcomeCode = "abcde67890123456";
+  const welcomeCode = localStorage.getItem("invitationCode");
+  const navigate = useNavigate();
 
   return (
     <>
@@ -93,8 +95,8 @@ function SuccessRoom() {
       </div>
 
       <CommonButton
-        // sx={{ position: "absolute", bottom: "0px" }}
         text="확인"
+        handleClick={() => navigate("/")}
       ></CommonButton>
     </>
   );
