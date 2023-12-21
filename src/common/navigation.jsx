@@ -25,6 +25,7 @@ function Navigation() {
         width: "100%",
         left: "0",
         bottom: "0",
+        display: "flex",
       }}
     >
       <BottomNavigationAction
@@ -42,7 +43,7 @@ function Navigation() {
       <BottomNavigationAction
         label="구독현황"
         component={Link}
-        to="/mypage"
+        to="/mysubscription"
         icon={<BookmarksIcon />}
       />
       <BottomNavigationAction
