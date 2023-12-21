@@ -3,19 +3,13 @@ import { TextField } from "@mui/material";
 import api from "../utils/apiInstance";
 import { useNavigate } from "react-router-dom";
 
-const sendUserName = async (userName) => {
-  return {
-    userName,
-    account: "12345678",
-  };
-  // try {
-  //   const { data } = await api.get("/comingSoon", {
-  //     params: { userName: userName },
-  //   });
-  //   return data;
-  // } catch (err) {
-  //   return err;
-  // }
+const login = async (userName) => {
+  try {
+    const data = await api.post("/users/login", { userName });
+    return data;
+  } catch (err) {
+    return err;
+  }
 };
 
 function Login({ setUser }) {
@@ -28,9 +22,7 @@ function Login({ setUser }) {
   const onKeyDown = (event) => {
     if (event.key === "Enter" && userName.length > 0) {
       event.preventDefault();
-      console.log("제출하기:   ", userName);
-      sendUserName(userName).then((result) => {
-        console.log("result", result);
+      login(userName).then((result) => {
         setUser(result);
         navigate("/");
       });
