@@ -180,9 +180,23 @@ const getGroupList = async (userId) => {
   }
 };
 
+const getTotalFee = async (userId) => {
+  try {
+    const { data } = await api.get("/subscribe/totalfee", {
+      params: { id: userId },
+    });
+
+    const stringFee = data.totalfee.toLocaleString("ko-KR");
+    return stringFee;
+  } catch (err) {
+    return err;
+  }
+};
+
 function Main({ user }) {
   const navigate = useNavigate();
   const [subGroupList, setSubGroupList] = useState([]);
+  const [totalFee, setTotalFee] = useState(0);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const closeModal = () => {
     setIsModalOpen(false);
@@ -192,6 +206,11 @@ function Main({ user }) {
     getGroupList(user.id).then((result) => {
       setSubGroupList(result);
     });
+
+    getTotalFee(user.id).then((result) => {
+      console.log(result);
+      setTotalFee(result);
+    });
   }, [user.id]);
 
   return (
@@ -199,7 +218,7 @@ function Main({ user }) {
       <h1 style={{ fontFamily: "KBFGDisplayB" }}>Sub 탈래?</h1>
       <BankbookContainer>
         <img src={bankbookImage} alt="bankbook" />
-        <p className="title">총 구독료 67,000원</p>
+        <p className="title">총 구독료 {totalFee}원</p>
         <button
           className="subtitle-container"
           onClick={() => {
