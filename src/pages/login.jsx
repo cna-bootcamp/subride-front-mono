@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 
 const login = async (userName) => {
   try {
-    const data = await api.post("/users/login", { userName });
+    const { data } = await api.post("/users/login", { userName });
     return data;
   } catch (err) {
     return err;
@@ -23,7 +23,9 @@ function Login({ setUser }) {
     if (event.key === "Enter" && userName.length > 0) {
       event.preventDefault();
       login(userName).then((result) => {
+        console.log("login", result);
         setUser(result);
+        window.sessionStorage.setItem("user", JSON.stringify(result));
         navigate("/");
       });
     }

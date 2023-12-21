@@ -13,7 +13,7 @@ import PrivateRoute from "./pages/privateRouter";
 import Navigation from "./common/navigation";
 
 function App() {
-  const [user, setUser] = useState(null);
+  const [user, setUser] = useState(JSON.parse(sessionStorage.getItem("user")));
 
   return (
     <>
