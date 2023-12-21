@@ -94,11 +94,16 @@ const PaymentDetailCotaienr = styled.div`
   top: 447.5px;
   left: 0px;
   width: 100%;
-  height: 60px;
 
   padding: 0px 10px;
   border-bottom: solid #eeeeee;
-
+  .newcss {
+    height: 60px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: solid #eeeeee;
+  }
   .firstClass {
     display: flex;
     align-items: center;
@@ -117,7 +122,6 @@ function GroupDetail() {
     subscribeDTO: { logo: "", serviceName: "" },
     users: [],
   });
-  const [totalNum, setTotalNum] = useState(Data.users.length);
 
   useEffect(() => {
     const getServiceData = async (groupId) => {
@@ -201,7 +205,7 @@ function GroupDetail() {
 
       <PaymentDetailCotaienr>
         {Data.users.map((item) => (
-          <div>
+          <div className="newcss">
             <div className="firstClass">
               <div className="item">12.11</div>
               <div className="item">
