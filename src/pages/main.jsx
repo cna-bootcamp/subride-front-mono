@@ -9,6 +9,7 @@ import CustomModal from "../components/main/CustomModal";
 import { Button } from "@mui/material";
 import api from "../utils/apiInstance";
 import { useNavigate } from "react-router-dom";
+import characterKiki from "../assets/character1.png";
 
 const BankbookContainer = styled.div`
   text-align: center;
@@ -24,7 +25,6 @@ const BankbookContainer = styled.div`
 
   p.title {
     margin: 10px 0px 0px 0px;
-    font-size: 24px;
   }
 
   .subtitle-container {
@@ -42,16 +42,17 @@ const BankbookContainer = styled.div`
 `;
 
 const SubContainer = styled.div`
-  margin-top: 30px;
-  padding: 10px;
   background-color: #f1f3f5;
-  font-size: 20px;
+  padding: 0.5rem;
   width: 100%;
+  border-radius: 10px;
+  margin: 1rem 0rem;
 
   .display-flex {
     display: flex;
     align-items: center;
     justify-content: space-between;
+    margin-bottom: 0.5rem;
   }
 
   p {
@@ -64,15 +65,16 @@ const SubContainer = styled.div`
     margin-top: 20px;
     overflow-x: auto;
     white-space: nowrap;
+    margin: 0px;
   }
 
   .image-box {
     display: inline-block;
-    width: 70px;
-    height: 70px;
+    width: 65px;
+    height: 65px;
     border-radius: 70%;
     background-color: pink;
-    margin: 7px 14px 0px 0px;
+    margin: 0rem 1rem 0rem 0rem;
     object-fit: cover;
 
     p {
@@ -98,6 +100,58 @@ const SubContainer = styled.div`
     border-radius: 5px;
     background-color: pink;
     margin: 7px;
+  }
+`;
+
+const RecommendContainer = styled.div`
+  background-color: #f9eeee;
+  padding: 0.5rem 0.5rem 1.5rem 0.5rem;
+  width: 100%;
+  border-radius: 10px;
+  position: relative;
+  box-shadow: 0 3px 3px rgba(0, 0, 0, 0.2);
+
+  span {
+    color: #878787;
+    font-size: 10px;
+    margin-left: 2px;
+  }
+
+  .content {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+
+  img {
+    width: 110px;
+  }
+
+  .bottom {
+    height: 2rem;
+    width: 100%;
+    background-color: white;
+    position: absolute;
+    border-radius: 0 0 10px 10px;
+    bottom: 0;
+    color: #878787;
+    font-size: 12px;
+    font-family: "KBFGTextM";
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  button {
+    background: inherit;
+    border: none;
+    box-shadow: none;
+    border-radius: 0;
+    padding: 0;
+    overflow: visible;
+    cursor: pointer;
   }
 `;
 
@@ -180,19 +234,25 @@ function Main({ user }) {
         </ul>
       </SubContainer>
 
-      <SubContainer>
-        <p className="title">이번 달 281,000원을 지출하신</p>
-        <p className="title">당신은 살림왕!</p>
-        <div className="images">
-          <div className="image-box-recommend"></div>
-          <div className="image-box-recommend"></div>
-          <div className="image-box-recommend"></div>
-          <div className="image-box-recommend"></div>
-          <div className="image-box-recommend"></div>
-          <div className="image-box-recommend"></div>
-          <div className="image-box-recommend"></div>
+      <RecommendContainer>
+        <p>
+          추천서비스 <span>12월 21일 기준</span>
+        </p>
+        <div className="content">
+          <img src={characterKiki} alt="kingOfSomething" />
+          <p>이번 달 당신은 살림왕!</p>
+          <button
+            className="bottom"
+            onClick={() => {
+              navigate("/recommend");
+            }}
+          >
+            <p>지출 내역 기반으로 구독 서비스를 추천해드려요</p>
+            <ArrowForwardIosIcon sx={{ fontSize: "11px", marginLeft: "2px" }} />
+          </button>
         </div>
-      </SubContainer>
+      </RecommendContainer>
+
       <CustomModal isOpen={isModalOpen} closeModal={closeModal}>
         <ModalContent>
           <p>새로운 썹</p>
@@ -203,7 +263,7 @@ function Main({ user }) {
                 navigate("/makegroup");
               }}
             >
-              <GroupAddIcon sx={{ marginRight: "10px" }} />썹 만들기
+              <GroupAddIcon />썹 만들기
             </Button>
             <Button
               sx={{ width: "100%", color: "#4A4646" }}

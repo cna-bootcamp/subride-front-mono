@@ -9,6 +9,7 @@ import SuccessRoom from "./pages/successRoom";
 import ComeGroup from "./pages/comeGroup";
 import Login from "./pages/login";
 import MySubscription from "./pages/mySubscription";
+import Recommend from './pages/recommend'
 import PrivateRoute from "./pages/privateRouter";
 import Navigation from "./common/navigation";
 
@@ -27,6 +28,7 @@ function App() {
           <Route path="/comegroup" element={<ComeGroup />} />
           <Route path="/mysubscription" element={<MySubscription />} />
           <Route path="/groupdetail" element={<GroupDetail />} />
+          <Route path="/recommend" element={<Recommend />} />
         </Route>
         <Route path="/login" element={<Login setUser={setUser} />} />
       </Routes>
