@@ -9,14 +9,11 @@ import { useEffect, useState } from "react";
 import api from "../utils/apiInstance";
 import { useNavigate } from "react-router-dom";
 
-const accountList = [
-  { content: "111111-11113" },
-  { content: "018302-14-12345 : KB마이핏통장" },
-  { content: "018302-24-12345 : KB마이핏통장" },
-];
+var userData = JSON.parse(window.sessionStorage.getItem("user"));
 
 const memebernList = [{ content: "1" }, { content: "2" }, { content: "3" }];
 const payDateList = [];
+const accountList = [{ content: userData.bandkAccount + ":마이핏통장" }];
 
 // 문자열로 바꿔주기
 for (var i = 1; i <= 31; i++) {
@@ -46,31 +43,32 @@ function MakeGroup() {
   const payDateProps = makeListProps(payDateList);
 
   function jiminClick() {
+    var groupTitle = document.getElementById("그룹이름").value;
     var accountInput = document.getElementById("대표계좌선택").value;
     var serviceInput = document.getElementById("서비스선택").value;
-    var membernumInput = document.getElementById("멤버수설정").value;
-    var dayInputs = document.getElementById("결제일").value;
+    // var membernumInput = document.getElementById("멤버수설정").value;
+    var dayInputs = document.getElementById("결제일선택").value;
 
     var dayInput = parseInt(dayInputs);
 
-    console.log(accountInput);
-    console.log(serviceInput);
-    console.log(membernumInput);
-    console.log(dayInput);
+    // console.log(groupTitle);
+    // console.log(accountInput);
+    // console.log(serviceInput);
+    // console.log(membernumInput);
+    // console.log(dayInput);
 
     const lastData = {
       groupAccount: accountInput,
-      leaderUser: 7,
-      groupName: "지민그룹",
+      leaderUser: userData.id,
+      groupName: groupTitle,
       subscribeName: serviceInput,
       billingDate: dayInput,
     };
-    console.log(lastData);
 
     api
       .post("/group/create", lastData)
       .then(function (response) {
-        console.log(response.data.invitationCode);
+        // console.log(response.data.invitationCode);
         window.localStorage.setItem(
           "invitationCode",
           response.data.invitationCode
@@ -95,7 +93,6 @@ function MakeGroup() {
     };
 
     getServiceData(3).then((result) => {
-      console.log(result);
       setServiceData(result);
     });
   }, []);
@@ -103,6 +100,7 @@ function MakeGroup() {
   return (
     <>
       <Header></Header>
+
       <Box
         sx={{
           width: "100%",
@@ -115,12 +113,13 @@ function MakeGroup() {
         }}
       >
         <Stack spacing={4}>
+          <TextField id="그룹이름" label="그룹 이름" variant="standard" />
           <Autocomplete
             {...accountProps}
             id="대표계좌선택"
             disableClearable
             renderInput={(params) => (
-              <TextField {...params} label="계좌선택" variant="standard" />
+              <TextField {...params} label="계좌 선택" variant="standard" />
             )}
           />
           <Autocomplete
@@ -146,7 +145,7 @@ function MakeGroup() {
               <div>
                 <TextField
                   {...params}
-                  label="구독서비스선택하기"
+                  label="구독서비스 선택하기"
                   variant="standard"
                 />
               </div>
@@ -162,10 +161,10 @@ function MakeGroup() {
           />
           <Autocomplete
             {...payDateProps}
-            id="결제일"
+            id="결제일선택"
             disableClearable
             renderInput={(params) => (
-              <TextField {...params} label="결제" variant="standard" />
+              <TextField {...params} label="결제일" variant="standard" />
             )}
           />
         </Stack>
