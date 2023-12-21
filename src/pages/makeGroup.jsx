@@ -68,7 +68,6 @@ function MakeGroup() {
     api
       .post("/group/create", lastData)
       .then(function (response) {
-        // console.log(response.data.invitationCode);
         window.localStorage.setItem(
           "invitationCode",
           response.data.invitationCode
