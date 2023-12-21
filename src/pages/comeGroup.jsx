@@ -51,17 +51,17 @@ const PasswordConatiner = styled.div`
   }
 `;
 
+var userData = JSON.parse(window.sessionStorage.getItem("user"));
+
 function ComeGroup() {
   const navigate = useNavigate();
   function jiminClick() {
     var password = document.getElementById("비밀번호").value;
 
     const lastData = {
-      id: 8,
+      id: userData.id,
       invitationCode: password,
     };
-
-    console.log(lastData);
 
     api
       .post("/group/join", lastData)
