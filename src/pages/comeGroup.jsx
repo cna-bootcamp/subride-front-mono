@@ -1,55 +1,77 @@
 import Box from "@mui/material/Box";
 import comeGroupImg from "../assets/comeGroup.png";
 import CommonButton from "../common/commonButton";
+import { useNavigate } from "react-router-dom";
 
 import styled from "@emotion/styled";
+import api from "../utils/apiInstance";
 
-function comeGroup() {
-  const ImgAndTextContainer = styled.div`
-    margin: 100px 30px 20px 30px;
+const ImgAndTextContainer = styled.div`
+  margin: 100px 30px 20px 30px;
 
-    display: flex-column;
+  display: flex-column;
 
-    .welcome-text {
-      font-size: 30px;
-      color: #f2dc14;
-      margin-bottom: 10px;
-    }
-    .detail-text {
-      margin-bottom: 4px;
-      font-size: 20px;
-      color: #999999;
-    }
+  .welcome-text {
+    font-size: 30px;
+    color: #f2dc14;
+    margin-bottom: 10px;
+  }
+  .detail-text {
+    margin-bottom: 4px;
+    font-size: 20px;
+    color: #999999;
+  }
 
-    img {
-      display: block;
-      margin: 40px auto 40px auto;
-    }
-  `;
+  img {
+    display: block;
+    margin: 40px auto 40px auto;
+  }
+`;
 
-  const PasswordConatiner = styled.div`
-    margin: 20px 30px 20px 30px;
-    display: flex-column;
+const PasswordConatiner = styled.div`
+  margin: 20px 30px 20px 30px;
+  display: flex-column;
 
-    .password-text {
-      font-size: 17px;
-      margin-bottom: 10px;
-    }
+  .password-text {
+    font-size: 17px;
+    margin-bottom: 10px;
+  }
 
-    .input-box {
-      margin-bottom: 10px;
-      width: 100%;
-      font-size: 20px;
-      color: #999999;
-      border-right: 0px;
-      border-top: 0px;
-      border-left: 0px;
-      border-bottom: solid 2px;
-      border-color: #f2dc14;
-      outline: none;
-    }
-  `;
+  .input-box {
+    margin-bottom: 10px;
+    width: 100%;
+    font-size: 20px;
+    color: #999999;
+    border-right: 0px;
+    border-top: 0px;
+    border-left: 0px;
+    border-bottom: solid 2px;
+    border-color: #f2dc14;
+    outline: none;
+  }
+`;
 
+function ComeGroup() {
+  const navigate = useNavigate();
+  function jiminClick() {
+    var password = document.getElementById("비밀번호").value;
+
+    const lastData = {
+      id: 8,
+      invitationCode: password,
+    };
+
+    console.log(lastData);
+
+    api
+      .post("/group/join", lastData)
+      .then(function (response) {
+        navigate("/");
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+  }
   return (
     <>
       <ImgAndTextContainer>
@@ -63,12 +85,15 @@ function comeGroup() {
       <PasswordConatiner>
         <div className="password-text">비밀번호</div>
 
-        <input className="input-box"></input>
+        <input className="input-box" id="비밀번호"></input>
 
-        <CommonButton text="확인"></CommonButton>
+        <CommonButton
+          text="확인"
+          handleClick={() => jiminClick()}
+        ></CommonButton>
       </PasswordConatiner>
     </>
   );
 }
 
-export default comeGroup;
+export default ComeGroup;
