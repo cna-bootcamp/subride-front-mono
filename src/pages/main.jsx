@@ -8,6 +8,7 @@ import AddIcon from "@mui/icons-material/Add";
 import CustomModal from "../components/main/CustomModal";
 import { Button } from "@mui/material";
 import api from "../utils/apiInstance";
+import { useNavigate } from "react-router-dom";
 
 const BankbookContainer = styled.div`
   text-align: center;
@@ -26,13 +27,15 @@ const BankbookContainer = styled.div`
     font-size: 24px;
   }
 
-  div.subtitle-container {
+  .subtitle-container {
     display: flex;
-    justify-content: center;
     align-items: center;
+    border: 0;
+    background-color: transparent;
+    margin: 0 auto;
   }
 
-  p.subtitle {
+  .subtitle {
     margin: 1px 0px;
     font-size: 20px;
   }
@@ -124,6 +127,7 @@ const getGroupList = async (userId) => {
 };
 
 function Main({ user }) {
+  const navigate = useNavigate();
   const [subGroupList, setSubGroupList] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const closeModal = () => {
@@ -142,10 +146,15 @@ function Main({ user }) {
       <BankbookContainer>
         <img src={bankbookImage} alt="bankbook" />
         <p className="title">총 구독료 67,000원</p>
-        <div className="subtitle-container">
+        <button
+          className="subtitle-container"
+          onClick={() => {
+            navigate("/sub");
+          }}
+        >
           <p className="subtitle">썹타고 구독료 아끼러 가기 </p>
           <ArrowForwardIosIcon sx={{ marginLeft: "5px", color: "#F2DC14" }} />
-        </div>
+        </button>
       </BankbookContainer>
       <SubContainer>
         <div className="display-flex">
@@ -188,10 +197,20 @@ function Main({ user }) {
         <ModalContent>
           <p>새로운 썹</p>
           <div className="button-box">
-            <Button sx={{ width: "100%", color: "#4A4646" }}>
+            <Button
+              sx={{ width: "100%", color: "#4A4646" }}
+              onClick={() => {
+                navigate("/makegroup");
+              }}
+            >
               <GroupAddIcon sx={{ marginRight: "10px" }} />썹 만들기
             </Button>
-            <Button sx={{ width: "100%", color: "#4A4646" }}>
+            <Button
+              sx={{ width: "100%", color: "#4A4646" }}
+              onClick={() => {
+                navigate("/comegroup");
+              }}
+            >
               <KeyIcon sx={{ marginRight: "10px" }} />썹 참여하기
             </Button>
           </div>
