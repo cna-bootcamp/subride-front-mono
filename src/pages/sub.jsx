@@ -19,7 +19,7 @@ const SubPage = styled.div`
   }
 `;
 
-function Sub() {
+function Sub({ userId }) {
   const [serviceList, setServiceList] = useState([]);
 
   useEffect(() => {
@@ -34,10 +34,10 @@ function Sub() {
       }
     };
 
-    getServiceList(1).then((result) => {
+    getServiceList(userId).then((result) => {
       setServiceList(result);
     });
-  }, []);
+  }, [userId]);
 
   return (
     <SubPage>

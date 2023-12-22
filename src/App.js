@@ -21,7 +21,7 @@ function App() {
       <Routes>
         <Route element={<PrivateRoute isLoggedIn={user} />}>
           <Route path="/" element={<Main user={user} />} />
-          <Route path="/sub" element={<Sub />} />
+          <Route path="/sub" element={<Sub userId={user.id}/>} />
           <Route path="/test" element={<Test />} />
           <Route path="/makegroup" element={<MakeGroup />} />
           <Route path="/successroom" element={<SuccessRoom />} />
