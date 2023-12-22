@@ -1,5 +1,4 @@
 import styled from "@emotion/styled";
-import netflix from "../../assets/netflix.png";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 const SubItem = styled.li`
   width: 100%;
@@ -7,7 +6,7 @@ const SubItem = styled.li`
   display: flex;
   align-items: center;
   border-radius: 8px;
-  padding: 10px;
+  padding: 5px 0px;
   margin: 10px 0px;
 
   .image-box {
@@ -15,6 +14,7 @@ const SubItem = styled.li`
     height: 60px;
     border-radius: 70%;
     background-color: white;
+    margin-right: 10px;
   }
 
   img {
@@ -45,12 +45,13 @@ function SubListItem({ item }) {
   return (
     <SubItem>
       <div className="image-box">
-        <img src={netflix} alt="logo" />
+        <img
+          src={process.env.PUBLIC_URL + `/service/${item.serviceId}.png`}
+          alt={item.serviceName}
+        />
       </div>
       <div className="service">
-        <p className="service-name">
-          {item.serviceName} {item.serviceName} {item.serviceName}
-        </p>
+        <p className="service-name">{item.serviceName}</p>
         <p>썹타러 가기</p>
       </div>
       <ArrowForwardIosIcon sx={{ fontSize: "16px", marginLeft: "auto" }} />
