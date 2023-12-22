@@ -41,7 +41,7 @@ const SubItem = styled.li`
   }
 `;
 
-function SubListItem({ item }) {
+function SubListItem({ item, handleClick }) {
   return (
     <SubItem>
       <div className="image-box">
@@ -53,7 +53,10 @@ function SubListItem({ item }) {
         </p>
         <p>썹타러 가기</p>
       </div>
-      <ArrowForwardIosIcon sx={{ fontSize: "16px", marginLeft: "auto" }} />
+      <ArrowForwardIosIcon
+        onClick={handleClick}
+        sx={{ fontSize: "16px", marginLeft: "auto" }}
+      />
     </SubItem>
   );
 }

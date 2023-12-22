@@ -20,10 +20,15 @@ function Header() {
             height: "50px",
             fontSize: 30,
             fontWeight: 700,
+            borderBottom: "solid 1px #F6F7FA",
           }}
         >
           <Link to="/" style={{ textDecoration: "none", color: "black" }}>
-            Sub 탈래??
+            <img
+              style={{ height: "20px", objectFit: "cover" }}
+              src={`./가로로고2.png`}
+              alt="로고"
+            ></img>
           </Link>
         </Box>
       </ThemeProvider>
