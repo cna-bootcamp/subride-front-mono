@@ -1,11 +1,11 @@
 import styled from "@emotion/styled";
 const color = {
   생필품: {
-    button: "#FFB864",
+    button: "#88B8FF",
     card: "#ffdbb0",
   },
   반려동물: {
-    button: "#88B8FF",
+    button: "#FFB864",
     card: "#eff3fe",
   },
 };
