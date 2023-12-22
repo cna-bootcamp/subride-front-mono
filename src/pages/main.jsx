@@ -10,12 +10,13 @@ import { Button } from "@mui/material";
 import api from "../utils/apiInstance";
 import { useNavigate } from "react-router-dom";
 import characterKiki from "../assets/character1.png";
+import Header from "../common/header";
 
 const BankbookContainer = styled.div`
   text-align: center;
 
   img {
-    margin: 50px auto 0px;
+    margin: 25px auto 0px;
     display: block;
   }
 
@@ -220,7 +221,7 @@ function Main({ user }) {
 
   return (
     <>
-      <h1 style={{ fontFamily: "KBFGDisplayB" }}>Sub 탈래?</h1>
+      <Header></Header>
       <BankbookContainer>
         <img src={bankbookImage} alt="bankbook" />
         <p className="title">총 구독료 {totalFee}원</p>
@@ -231,7 +232,12 @@ function Main({ user }) {
           }}
         >
           <p className="subtitle">썹타고 구독료 아끼러 가기 </p>
-          <ArrowForwardIosIcon sx={{ marginLeft: "5px", color: "#F2DC14" }} />
+          <ArrowForwardIosIcon
+            sx={{
+              marginLeft: "5px",
+              color: "#F2DC14",
+            }}
+          />
         </button>
       </BankbookContainer>
       <SubContainer>
