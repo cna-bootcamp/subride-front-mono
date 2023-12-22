@@ -9,11 +9,8 @@ import { useEffect, useState } from "react";
 import api from "../utils/apiInstance";
 import { useNavigate } from "react-router-dom";
 
-var userData = JSON.parse(window.sessionStorage.getItem("user"));
-
 const memebernList = [{ content: "1" }, { content: "2" }, { content: "3" }];
 const payDateList = [];
-const accountList = [{ content: userData.bandkAccount + ":마이핏통장" }];
 
 // 문자열로 바꿔주기
 for (var i = 1; i <= 31; i++) {
@@ -37,6 +34,8 @@ function makeListProps(lists) {
 function MakeGroup() {
   const navigate = useNavigate();
   const [serviceData, setServiceData] = useState([]);
+  const userData = JSON.parse(window.sessionStorage.getItem("user"));
+  const accountList = [{ content: userData.bandkAccount + ":마이핏통장" }];
   const accountProps = makeListProps(accountList);
   const serviceProps = makeListPropss(serviceData);
   const membernProps = makeListProps(memebernList);

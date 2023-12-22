@@ -2,6 +2,8 @@ import { useState } from "react";
 import { TextField } from "@mui/material";
 import api from "../utils/apiInstance";
 import { useNavigate } from "react-router-dom";
+import SendIcon from "@mui/icons-material/Send";
+import { IconButton } from "@mui/material";
 
 const login = async (userName) => {
   try {
@@ -19,15 +21,19 @@ function Login({ setUser }) {
     setUserName(event.target.value);
   };
 
+  const submit = (event) => {
+    event.preventDefault();
+    login(userName).then((result) => {
+      console.log("login", result);
+      setUser(result);
+      window.sessionStorage.setItem("user", JSON.stringify(result));
+      navigate("/");
+    });
+  };
+
   const onKeyDown = (event) => {
     if (event.key === "Enter" && userName.length > 0) {
-      event.preventDefault();
-      login(userName).then((result) => {
-        console.log("login", result);
-        setUser(result);
-        window.sessionStorage.setItem("user", JSON.stringify(result));
-        navigate("/");
-      });
+      submit(event);
     }
   };
 
@@ -54,7 +60,14 @@ function Login({ setUser }) {
         onChange={handleChange}
         onKeyDown={onKeyDown}
         sx={{ width: "100%" }}
-      />
+        InputProps={{
+          endAdornment: (
+            <IconButton onClick={submit}>
+              <SendIcon />
+            </IconButton>
+          ),
+        }}
+      ></TextField>
     </>
   );
 }
