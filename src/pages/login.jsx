@@ -39,19 +39,31 @@ function Login({ setUser }) {
 
   return (
     <>
-      <div
+      {/* <div
         style={{
           fontFamily: "KBFGDisplayB",
           width: "100px",
           height: "100px",
           backgroundColor: "skyblue",
         }}
+      ></div> */}
+      <div
+        style={{
+          paddingTop: "100px",
+          paddingBottom: "50px",
+          textAlign: "center",
+        }}
       >
-        <p>썹탈래? 로고</p>
+        <img
+          style={{ height: "200px", objectFit: "cover" }}
+          src={`./로고1.png`}
+          alt="로고"
+        ></img>
       </div>
-      <p style={{ fontSize: "20px", marginBottom: "12rem" }}>
+      <p style={{ fontSize: "20px", marginBottom: "30px" }}>
         사용하실 이름을 입력해주세요
       </p>
+      {/* <img src={`./로고1.png`}></img> */}
       <TextField
         id="standard-basic"
         label="닉네임"
