@@ -2,12 +2,13 @@ import TextField from "@mui/material/TextField";
 import Autocomplete from "@mui/material/Autocomplete";
 import Stack from "@mui/material/Stack";
 import Box from "@mui/material/Box";
-import Header from "../common/header";
+
 import CommonButton from "../common/commonButton";
 import Navigation from "../common/navigation";
 import { useEffect, useState } from "react";
 import api from "../utils/apiInstance";
 import { useNavigate } from "react-router-dom";
+import BackHeader from "../common/backHeader";
 
 const memebernList = [{ content: "1" }, { content: "2" }, { content: "3" }];
 const payDateList = [];
@@ -50,12 +51,6 @@ function MakeGroup() {
 
     var dayInput = parseInt(dayInputs);
 
-    // console.log(groupTitle);
-    // console.log(accountInput);
-    // console.log(serviceInput);
-    // console.log(membernumInput);
-    // console.log(dayInput);
-
     const lastData = {
       groupAccount: accountInput,
       leaderUser: userData.id,
@@ -97,7 +92,7 @@ function MakeGroup() {
 
   return (
     <>
-      <Header></Header>
+      <BackHeader text="그룹 만들기"></BackHeader>
 
       <Box
         sx={{
