@@ -81,19 +81,19 @@ const getMySubscription = async (userId) => {
     return err;
   }
 };
-function MySubscription({ userId }) {
+function MySubscription({ user }) {
   const [mySubscriptionList, setMySubscriptionList] = useState([]);
   const [totalFee, setTotalFee] = useState(0);
 
   useEffect(() => {
-    getMySubscription(userId).then((result) => {
+    getMySubscription(user.id).then((result) => {
       setMySubscriptionList(result);
     });
 
-    getTotalFee(userId).then((result) => {
+    getTotalFee(user.id).then((result) => {
       setTotalFee(result);
     });
-  }, [userId]);
+  }, [user.id]);
 
   return (
     <MySubscriptionPage>

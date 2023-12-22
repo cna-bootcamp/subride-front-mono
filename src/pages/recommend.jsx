@@ -29,6 +29,10 @@ const RecommendPage = styled.div`
     justify-content: space-between;
     flex-wrap: wrap;
   }
+
+  img {
+    width: 100%;
+  }
 `;
 const category = [
   "음료",
@@ -42,7 +46,8 @@ const category = [
   "취미",
 ];
 
-function Recommend({ userName }) {
+function Recommend({ user }) {
+  console.log(user);
   const [selectedItem, setSelectedItem] = useState("생필품");
 
   const selectItem = (itemName) => {
@@ -52,7 +57,7 @@ function Recommend({ userName }) {
 
   return (
     <RecommendPage>
-      <p className="title">{userName}님을 위한 추천</p>
+      <p className="title">{user.userName}님을 위한 추천</p>
       <p className="sub-title">
         이번달 생필품에 81,000원을 지출하신 당신은 살림왕👑
       </p>
@@ -66,6 +71,10 @@ function Recommend({ userName }) {
           ></CategoryItem>
         ))}
       </ul>
+      <img
+        src={process.env.PUBLIC_URL + `/${selectedItem}.png`}
+        alt={selectedItem + " king"}
+      />
     </RecommendPage>
   );
 }
