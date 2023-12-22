@@ -28,7 +28,7 @@ function App() {
           <Route path="/comegroup" element={<ComeGroup />} />
           <Route path="/mysubscription" element={<MySubscription />} />
           <Route path="/groupdetail" element={<GroupDetail />} />
-          <Route path="/recommend" element={<Recommend />} />
+          <Route path="/recommend" element={<Recommend userName={user.userName}/>} />
         </Route>
         <Route path="/login" element={<Login setUser={setUser} />} />
       </Routes>
