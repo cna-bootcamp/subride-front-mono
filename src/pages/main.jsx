@@ -222,7 +222,8 @@ function Main({ user }) {
     <>
       <h1 style={{ fontFamily: "KBFGDisplayB" }}>Sub 탈래?</h1>
       <BankbookContainer>
-        <img src={bankbookImage} alt="bankbook" />
+        {/* <img src={bankbookImage} alt="bankbook" /> */}
+        <img src={`./통장test.png`} alt="bankbook" />
         <p className="title">총 구독료 {totalFee}원</p>
         <button
           className="subtitle-container"
