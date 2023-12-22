@@ -9,6 +9,19 @@ import ListItemAvatar from "@mui/material/ListItemAvatar";
 import Avatar from "@mui/material/Avatar";
 import AddIcon from "@mui/icons-material/Add";
 
+const getTotalFee = async (userId) => {
+  try {
+    const { data } = await api.get("/subscribe/totalfee", {
+      params: { id: userId },
+    });
+
+    const stringFee = data.totalfee.toLocaleString("ko-KR");
+    return stringFee;
+  } catch (err) {
+    return err;
+  }
+};
+
 function SubscriptItem({ item }) {
   return (
     <ListItem sx={{ padding: "10px 0px" }}>
@@ -68,21 +81,26 @@ const getMySubscription = async (userId) => {
     return err;
   }
 };
-function MySubscription() {
+function MySubscription({ userId }) {
   const [mySubscriptionList, setMySubscriptionList] = useState([]);
+  const [totalFee, setTotalFee] = useState(0);
 
   useEffect(() => {
-    getMySubscription(1).then((result) => {
+    getMySubscription(userId).then((result) => {
       setMySubscriptionList(result);
     });
-  }, []);
+
+    getTotalFee(userId).then((result) => {
+      setTotalFee(result);
+    });
+  }, [userId]);
 
   return (
     <MySubscriptionPage>
       <p className="title">MY 구독 서비스</p>
       <div className="pay-description">
         <p>총 구독료</p>
-        <p>67,000 원</p>
+        <p>{totalFee} 원</p>
       </div>
       <List sx={{ width: "100%", maxWidth: 360, bgcolor: "background.paper" }}>
         {mySubscriptionList.map((item) => (

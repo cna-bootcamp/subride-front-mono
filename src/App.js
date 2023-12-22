@@ -26,7 +26,7 @@ function App() {
           <Route path="/makegroup" element={<MakeGroup />} />
           <Route path="/successroom" element={<SuccessRoom />} />
           <Route path="/comegroup" element={<ComeGroup />} />
-          <Route path="/mysubscription" element={<MySubscription />} />
+          <Route path="/mysubscription" element={<MySubscription userId={user.id}/>} />
           <Route path="/groupdetail" element={<GroupDetail />} />
           <Route path="/recommend" element={<Recommend userName={user.userName}/>} />
         </Route>
