@@ -39,14 +39,6 @@ function Login({ setUser }) {
 
   return (
     <>
-      {/* <div
-        style={{
-          fontFamily: "KBFGDisplayB",
-          width: "100px",
-          height: "100px",
-          backgroundColor: "skyblue",
-        }}
-      ></div> */}
       <div
         style={{
           paddingTop: "100px",

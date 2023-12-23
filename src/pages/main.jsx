@@ -18,14 +18,17 @@ const BankbookContainer = styled.div`
   img {
     margin: 25px auto 0px;
     display: block;
+    padding-bottom: 8px;
   }
 
   p {
-    margin: 0px;
+    margin: 6px;
   }
 
   p.title {
-    margin: 10px 0px 0px 0px;
+    margin: 10px 0px 7px 0px;
+    color: #0e131a;
+    font-family: KBFGDisplayM;
   }
 
   .subtitle-container {
@@ -38,12 +41,14 @@ const BankbookContainer = styled.div`
 
   .subtitle {
     margin: 1px 0px;
-    font-size: 20px;
+    font-size: 13px;
+    color: #0e131a;
+    font-family: KBFGDisplayM;
   }
 `;
 
 const SubContainer = styled.div`
-  background-color: #f1f3f5;
+  background-color: #f8f8f8;
   padding: 0.5rem;
   width: 100%;
   border-radius: 10px;
@@ -224,7 +229,11 @@ function Main({ user }) {
       <Header></Header>
       <BankbookContainer>
         {/* <img src={bankbookImage} alt="bankbook" /> */}
-        <img src={`./통장test.png`} alt="bankbook" />
+        <img
+          style={{ height: "100px", objectFit: "cover" }}
+          src={`./통장test.png`}
+          alt="bankbook"
+        />
         <p className="title">총 구독료 {totalFee}원</p>
         <button
           className="subtitle-container"
@@ -235,6 +244,7 @@ function Main({ user }) {
           <p className="subtitle">썹타고 구독료 아끼러 가기 </p>
           <ArrowForwardIosIcon
             sx={{
+              fontSize: "14px",
               marginLeft: "5px",
               color: "#F2DC14",
             }}
@@ -243,7 +253,7 @@ function Main({ user }) {
       </BankbookContainer>
       <SubContainer>
         <div className="display-flex">
-          <p className="title">썹 타는 중~</p>
+          <p className="title">My 썹 그룹</p>
           <Button onClick={() => setIsModalOpen(true)}>
             <AddIcon sx={{ fontSize: "25px", color: "#F2DC14" }} />
           </Button>

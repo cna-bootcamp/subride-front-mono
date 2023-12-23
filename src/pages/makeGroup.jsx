@@ -10,6 +10,10 @@ import api from "../utils/apiInstance";
 import { useNavigate } from "react-router-dom";
 import BackHeader from "../common/backHeader";
 
+import InputLabel from "@mui/material/InputLabel";
+import FormControl from "@mui/material/FormControl";
+import NativeSelect from "@mui/material/NativeSelect";
+
 const memebernList = [{ content: "1" }, { content: "2" }, { content: "3" }];
 const payDateList = [];
 
@@ -115,6 +119,27 @@ function MakeGroup() {
               <TextField {...params} label="계좌 선택" variant="standard" />
             )}
           />
+
+          <Box Agesx={{ minWidth: 120 }}>
+            <FormControl fullWidth>
+              <InputLabel
+                variant="standard"
+                htmlFor="uncontrolled-native"
+              ></InputLabel>
+              <NativeSelect
+                defaultValue={30}
+                inputProps={{
+                  name: "age",
+                  id: "uncontrolled-native",
+                }}
+              >
+                <option value={10}>Ten</option>
+                <option value={20}>Twenty</option>
+                <option value={30}>Thirty</option>
+              </NativeSelect>
+            </FormControl>
+          </Box>
+
           <Autocomplete
             {...serviceProps}
             id="서비스선택"
