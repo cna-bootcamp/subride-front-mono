@@ -21,14 +21,14 @@ function App() {
       <Routes>
         <Route element={<PrivateRoute isLoggedIn={user} />}>
           <Route path="/" element={<Main user={user} />} />
-          <Route path="/sub" element={<Sub userId={user.id}/>} />
+          <Route path="/sub" element={<Sub user={user}/>} />
           <Route path="/test" element={<Test />} />
           <Route path="/makegroup" element={<MakeGroup />} />
           <Route path="/successroom" element={<SuccessRoom />} />
           <Route path="/comegroup" element={<ComeGroup />} />
-          <Route path="/mysubscription" element={<MySubscription userId={user.id}/>} />
+          <Route path="/mysubscription" element={<MySubscription user={user}/>} />
           <Route path="/groupdetail" element={<GroupDetail />} />
-          <Route path="/recommend" element={<Recommend userName={user.userName}/>} />
+          <Route path="/recommend" element={<Recommend user={user}/>} />
         </Route>
         <Route path="/login" element={<Login setUser={setUser} />} />
       </Routes>

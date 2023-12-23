@@ -21,7 +21,7 @@ const SubPage = styled.div`
   }
 `;
 
-function Sub({ userId }) {
+function Sub({ user }) {
   const [serviceList, setServiceList] = useState([]);
   const navigate = useNavigate();
 
@@ -41,10 +41,10 @@ function Sub({ userId }) {
       }
     };
 
-    getServiceList(userId).then((result) => {
+    getServiceList(user.id).then((result) => {
       setServiceList(result);
     });
-  }, [userId]);
+  }, [user.id]);
 
   return (
     <div>
