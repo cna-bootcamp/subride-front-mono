@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import bankbookImage from "../assets/bankbook.png";
+
 import styled from "@emotion/styled";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 import GroupAddIcon from "@mui/icons-material/GroupAdd";

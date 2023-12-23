@@ -11,15 +11,15 @@ import { useNavigate } from "react-router-dom";
 import BackHeader from "../common/backHeader";
 
 import InputLabel from "@mui/material/InputLabel";
+import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
-import NativeSelect from "@mui/material/NativeSelect";
+import Select from "@mui/material/Select";
 
-const memebernList = [{ content: "1" }, { content: "2" }, { content: "3" }];
 const payDateList = [];
 
 // 문자열로 바꿔주기
 for (var i = 1; i <= 31; i++) {
-  payDateList.push({ content: String(i) });
+  payDateList.push(<MenuItem value={{ i }}> {i} </MenuItem>);
 }
 
 function makeListPropss(lists) {
@@ -37,31 +37,43 @@ function makeListProps(lists) {
 }
 
 function MakeGroup() {
+  const [account, setAccount] = useState("");
+  const [member, setmember] = useState("");
+  const [payDate, setPayDate] = useState("");
+
+  const handleChange = (event) => {
+    setAccount(event.target.value);
+    console.log(event.target.value);
+  };
+
+  const handleMemberChange = (event) => {
+    setmember(event.target.value);
+    console.log(event.target.value);
+  };
+
+  const handleDateChange = (event) => {
+    setPayDate(event.target.value);
+    console.log(event.target.value);
+  };
+
   const navigate = useNavigate();
   const [serviceData, setServiceData] = useState([]);
   const userData = JSON.parse(window.sessionStorage.getItem("user"));
-  const accountList = [{ content: userData.bandkAccount + ":마이핏통장" }];
-  const accountProps = makeListProps(accountList);
   const serviceProps = makeListPropss(serviceData);
-  const membernProps = makeListProps(memebernList);
-  const payDateProps = makeListProps(payDateList);
 
   function jiminClick() {
     var groupTitle = document.getElementById("그룹이름").value;
-    var accountInput = document.getElementById("대표계좌선택").value;
     var serviceInput = document.getElementById("서비스선택").value;
-    // var membernumInput = document.getElementById("멤버수설정").value;
     var dayInputs = document.getElementById("결제일선택").value;
 
-    var dayInput = parseInt(dayInputs);
-
     const lastData = {
-      groupAccount: accountInput,
+      groupAccount: account,
       leaderUser: userData.id,
       groupName: groupTitle,
       subscribeName: serviceInput,
-      billingDate: dayInput,
+      billingDate: payDate.i,
     };
+    console.log(lastData);
 
     api
       .post("/group/create", lastData)
@@ -104,41 +116,13 @@ function MakeGroup() {
           flexDirection: "column",
           justifyContent: "center",
           marginTop: "25px",
-          marginBottom: "140px",
+          marginBottom: "80px",
           paddingLeft: "20px",
           paddingRight: "20px",
         }}
       >
         <Stack spacing={4}>
           <TextField id="그룹이름" label="그룹 이름" variant="standard" />
-          <Autocomplete
-            {...accountProps}
-            id="대표계좌선택"
-            disableClearable
-            renderInput={(params) => (
-              <TextField {...params} label="계좌 선택" variant="standard" />
-            )}
-          />
-
-          <Box Agesx={{ minWidth: 120 }}>
-            <FormControl fullWidth>
-              <InputLabel
-                variant="standard"
-                htmlFor="uncontrolled-native"
-              ></InputLabel>
-              <NativeSelect
-                defaultValue={30}
-                inputProps={{
-                  name: "age",
-                  id: "uncontrolled-native",
-                }}
-              >
-                <option value={10}>Ten</option>
-                <option value={20}>Twenty</option>
-                <option value={30}>Thirty</option>
-              </NativeSelect>
-            </FormControl>
-          </Box>
 
           <Autocomplete
             {...serviceProps}
@@ -169,22 +153,50 @@ function MakeGroup() {
               </div>
             )}
           />
-          <Autocomplete
-            {...membernProps}
-            id="멤버수설정"
-            disableClearable
-            renderInput={(params) => (
-              <TextField {...params} label="멤버수" variant="standard" />
-            )}
-          />
-          <Autocomplete
-            {...payDateProps}
-            id="결제일선택"
-            disableClearable
-            renderInput={(params) => (
-              <TextField {...params} label="결제일" variant="standard" />
-            )}
-          />
+
+          <FormControl variant="standard" sx={{ m: 1, minWidth: 120 }}>
+            <InputLabel id="대표계좌">대표계좌 선택하기</InputLabel>
+            <Select
+              labelId="demo-simple-select-standard-label"
+              id="대표계좌선택"
+              value={account}
+              onChange={handleChange}
+              label="계좌선택"
+            >
+              <MenuItem value={userData.bandkAccount}>
+                {userData.bandkAccount} :마이핏통장
+              </MenuItem>
+            </Select>
+          </FormControl>
+
+          <FormControl variant="standard" sx={{ m: 1, minWidth: 120 }}>
+            <InputLabel id="대표계좌">멤버수선택</InputLabel>
+            <Select
+              labelId="demo-simple-select-standard-label"
+              id="멤버수선택"
+              value={member}
+              onChange={handleMemberChange}
+              label="계좌선택"
+            >
+              <MenuItem value={1}>1</MenuItem>
+              <MenuItem value={2}>2</MenuItem>
+              <MenuItem value={3}>3</MenuItem>
+              <MenuItem value={4}>4</MenuItem>
+            </Select>
+          </FormControl>
+
+          <FormControl variant="standard" sx={{ m: 1, minWidth: 120 }}>
+            <InputLabel id="결제일선택">결제일</InputLabel>
+            <Select
+              labelId="demo-simple-select-standard-label"
+              id="결제일선택"
+              value={payDate}
+              onChange={handleDateChange}
+              label="결제일"
+            >
+              {payDateList.map((elem) => elem)}
+            </Select>
+          </FormControl>
         </Stack>
       </Box>
       <CommonButton
