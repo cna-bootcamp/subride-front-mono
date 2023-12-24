@@ -12,7 +12,6 @@ import Login from "./pages/login";
 import MySubscription from "./pages/mySubscription";
 import Recommend from './pages/recommend'
 import PrivateRoute from "./pages/privateRouter";
-import Navigation from "./common/navigation";
 
 function App() {
   const [user, setUser] = useState(JSON.parse(sessionStorage.getItem("user")));
@@ -34,7 +33,6 @@ function App() {
         </Route>
         <Route path="/login" element={<Login setUser={setUser} />} />
       </Routes>
-      <Navigation />
     </>
   );
 }

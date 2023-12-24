@@ -1,6 +1,7 @@
 import styled from "@emotion/styled";
 import CategoryItem from "../components/recommend/categoryItem";
 import { useState } from "react";
+import Navigation from "../common/navigation";
 
 const RecommendPage = styled.div`
   color: #4a4646;
@@ -62,26 +63,29 @@ function Recommend({ user }) {
   };
 
   return (
-    <RecommendPage>
-      <p className="title">
-        {user.userName}님을 위한 <span>구독서비스</span>
-      </p>
-      <p className="sub-title">이번 달 생필품에 81,000원을 지출했어요</p>
-      <ul className="category">
-        {category.map((item, index) => (
-          <CategoryItem
-            key={index}
-            name={item}
-            selectItem={selectItem}
-            isSelected={selectedItem === item}
-          ></CategoryItem>
-        ))}
-      </ul>
-      <img
-        src={process.env.PUBLIC_URL + `/${selectedItem}.png`}
-        alt={selectedItem + " king"}
-      />
-    </RecommendPage>
+    <>
+      <RecommendPage>
+        <p className="title">
+          {user.userName}님을 위한 <span>구독서비스</span>
+        </p>
+        <p className="sub-title">이번 달 생필품에 81,000원을 지출했어요</p>
+        <ul className="category">
+          {category.map((item, index) => (
+            <CategoryItem
+              key={index}
+              name={item}
+              selectItem={selectItem}
+              isSelected={selectedItem === item}
+            ></CategoryItem>
+          ))}
+        </ul>
+        <img
+          src={process.env.PUBLIC_URL + `/${selectedItem}.png`}
+          alt={selectedItem + " king"}
+        />
+      </RecommendPage>
+      <Navigation />
+    </>
   );
 }
 

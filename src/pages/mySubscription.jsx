@@ -5,6 +5,7 @@ import api from "../utils/apiInstance";
 import List from "@mui/material/List";
 import AddIcon from "@mui/icons-material/Add";
 import SubscriptItem from "../components/sub/SubscriptItem";
+import Navigation from "../common/navigation";
 
 const mockList = [
   {
@@ -116,22 +117,27 @@ function MySubscription({ user }) {
   }, [user.id]);
 
   return (
-    <MySubscriptionPage>
-      <p className="title">MY 구독 서비스</p>
-      <div className="pay-description">
-        <p>총 구독료</p>
-        <p>{totalFee} 원</p>
-      </div>
-      <List sx={{ width: "100%", maxWidth: 360, bgcolor: "background.paper" }}>
-        {mySubscriptionList.map((item) => (
-          <SubscriptItem key={item.serviceId} item={item}></SubscriptItem>
-        ))}
-      </List>
-      <button className="add-button">
-        <AddIcon sx={{ fontSize: "1rem", marginRight: "1rem" }} />
-        <p>추가하기</p>
-      </button>
-    </MySubscriptionPage>
+    <>
+      <MySubscriptionPage>
+        <p className="title">MY 구독 서비스</p>
+        <div className="pay-description">
+          <p>총 구독료</p>
+          <p>{totalFee} 원</p>
+        </div>
+        <List
+          sx={{ width: "100%", maxWidth: 360, bgcolor: "background.paper" }}
+        >
+          {mySubscriptionList.map((item) => (
+            <SubscriptItem key={item.serviceId} item={item}></SubscriptItem>
+          ))}
+        </List>
+        <button className="add-button">
+          <AddIcon sx={{ fontSize: "1rem", marginRight: "1rem" }} />
+          <p>추가하기</p>
+        </button>
+      </MySubscriptionPage>
+      <Navigation />
+    </>
   );
 }
 

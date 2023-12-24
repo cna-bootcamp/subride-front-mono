@@ -11,6 +11,7 @@ import api from "../utils/apiInstance";
 import { useNavigate } from "react-router-dom";
 import bunnyKing from "../assets/bunnyKing.png";
 import Header from "../common/header";
+import Navigation from "../common/navigation";
 
 const BankbookContainer = styled.div`
   text-align: center;
@@ -332,6 +333,7 @@ function Main({ user }) {
           </div>
         </ModalContent>
       </CustomModal>
+      <Navigation />
     </>
   );
 }
