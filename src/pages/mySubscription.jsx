@@ -6,18 +6,40 @@ import List from "@mui/material/List";
 import AddIcon from "@mui/icons-material/Add";
 import SubscriptItem from "../components/sub/SubscriptItem";
 
-const getTotalFee = async (userId) => {
-  try {
-    const { data } = await api.get("/subscribe/totalfee", {
-      params: { id: userId },
-    });
-
-    const stringFee = data ? data.totalfee.toLocaleString("ko-KR") : 0;
-    return stringFee;
-  } catch (err) {
-    return err;
-  }
-};
+const mockList = [
+  {
+    categoryName: "쇼핑",
+    description: "아침 주문, 저녁 도착 ",
+    fee: 4990,
+    logo: "23",
+    serviceId: 23,
+    serviceName: "쿠팡 로켓와우",
+  },
+  {
+    categoryName: "OTT",
+    description: "넷플릭스 오리지날",
+    fee: 17000,
+    logo: "1",
+    serviceId: 1,
+    serviceName: "넷플릭스",
+  },
+  {
+    categoryName: "OTT",
+    description: "당신의 볼거리를 위한 티빙",
+    fee: 10900,
+    logo: "19",
+    serviceId: 19,
+    serviceName: "티빙",
+  },
+  {
+    categoryName: "쇼핑",
+    description: "네이버 페이 포인트 최대 5% 적립",
+    fee: 4900,
+    logo: "21",
+    serviceId: 21,
+    serviceName: "네이버 플러스",
+  },
+];
 
 const MySubscriptionPage = styled.div`
   p {
@@ -51,16 +73,34 @@ const MySubscriptionPage = styled.div`
   }
 `;
 
+const getTotalFee = async (userId) => {
+  try {
+    const data = await api.get("/subscribe/totalfee", {
+      params: { id: userId },
+    });
+
+    const totalFee = data.totalfee || 37790;
+    return totalFee.toLocaleString("ko-KR");
+  } catch (err) {
+    return err;
+  }
+};
+
 const getMySubscription = async (userId) => {
   try {
     const { data } = await api.get("/subscribe/mylist", {
       params: { id: userId },
     });
+
+    if (data.length === 0) {
+      return mockList;
+    }
     return data;
   } catch (err) {
     return err;
   }
 };
+
 function MySubscription({ user }) {
   const [mySubscriptionList, setMySubscriptionList] = useState([]);
   const [totalFee, setTotalFee] = useState(0);
