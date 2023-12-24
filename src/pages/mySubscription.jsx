@@ -3,11 +3,8 @@ import { useEffect, useState } from "react";
 import styled from "@emotion/styled";
 import api from "../utils/apiInstance";
 import List from "@mui/material/List";
-import ListItem from "@mui/material/ListItem";
-import ListItemText from "@mui/material/ListItemText";
-import ListItemAvatar from "@mui/material/ListItemAvatar";
-import Avatar from "@mui/material/Avatar";
 import AddIcon from "@mui/icons-material/Add";
+import SubscriptItem from "../components/sub/SubscriptItem";
 
 const getTotalFee = async (userId) => {
   try {
@@ -22,23 +19,6 @@ const getTotalFee = async (userId) => {
   }
 };
 
-function SubscriptItem({ item }) {
-  return (
-    <ListItem sx={{ padding: "10px 0px" }}>
-      <ListItemAvatar>
-        <Avatar
-          src={process.env.PUBLIC_URL + `/service/${item.serviceId}.png`}
-          alt={item.serviceName}
-        />
-      </ListItemAvatar>
-      <ListItemText
-        primary={item.serviceName}
-        secondary={`${item.fee}원`}
-        primaryTypographyProps={{ fontSize: "15px" }}
-      />
-    </ListItem>
-  );
-}
 const MySubscriptionPage = styled.div`
   p {
     margin: 0px;
