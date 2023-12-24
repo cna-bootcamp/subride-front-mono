@@ -296,7 +296,7 @@ function Main({ user }) {
         </p>
         <div className="content">
           <img src={bunnyKing} alt="kingOfSomething" />
-          <p>이번 달 당신은 살림왕!</p>
+          <p>이번 달 당신은 살림왕👑</p>
           <button
             className="bottom"
             onClick={() => {
