@@ -63,7 +63,7 @@ function MySub({ user }) {
               description={`썹타서 ${parseInt(
                 ((item.users.length - 1) / item.users.length) *
                   item.subscribeDTO.fee
-              )}원 아끼는 중`}
+              ).toLocaleString("ko-KR")}원 아끼는 중`}
             />
           ))}
         </ul>
