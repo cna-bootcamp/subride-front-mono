@@ -246,16 +246,22 @@ function Main({ user }) {
             sx={{
               fontSize: "14px",
               marginLeft: "5px",
-              color: "#F2DC14",
+              color: "rgba(0, 0, 0, 0.6)",
+              width: "20px",
             }}
           />
         </button>
       </BankbookContainer>
       <SubContainer>
         <div className="display-flex">
-          <p className="title">My 썹 그룹</p>
-          <Button onClick={() => setIsModalOpen(true)}>
-            <AddIcon sx={{ fontSize: "25px", color: "#F2DC14" }} />
+          <p className="title">나의 Sub</p>
+          <Button onClick={() => setIsModalOpen(true)} sx={{ minWidth: "0px" }}>
+            <AddIcon
+              sx={{
+                fontSize: "25px",
+                color: "rgba(0, 0, 0, 0.6)",
+              }}
+            />
           </Button>
         </div>
         <ul className="images">

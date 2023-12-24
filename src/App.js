@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Route, Routes } from "react-router-dom";
 import Main from "./pages/main";
 import Sub from "./pages/sub";
+import MySub from "./pages/mySub";
 import Test from "./pages/test";
 import MakeGroup from "./pages/makeGroup";
 import GroupDetail from "./pages/groupDetail";
@@ -22,6 +23,7 @@ function App() {
         <Route element={<PrivateRoute isLoggedIn={user} />}>
           <Route path="/" element={<Main user={user} />} />
           <Route path="/sub" element={<Sub user={user}/>} />
+          <Route path="/mysub" element={<MySub user={user}/>} />
           <Route path="/test" element={<Test />} />
           <Route path="/makegroup" element={<MakeGroup />} />
           <Route path="/successroom" element={<SuccessRoom />} />
