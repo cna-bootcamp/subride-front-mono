@@ -23,10 +23,10 @@ function Header() {
             borderBottom: "solid 1px #F6F7FA",
           }}
         >
-          <Link to="/" style={{ textDecoration: "none", color: "black" }}>
+          <Link to="/" style={{ textDecoration: "none", color: "#0E131A" }}>
             <img
               style={{ height: "20px", objectFit: "cover" }}
-              src={`./가로로고2.png`}
+              src={`./메인로고.png`}
               alt="로고"
             ></img>
           </Link>
