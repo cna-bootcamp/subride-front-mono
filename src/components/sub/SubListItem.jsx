@@ -10,8 +10,8 @@ const SubItem = styled.li`
   display: flex;
   align-items: center;
   border-radius: 8px;
-  padding: 10px 2px;
-  margin: 10px 0px;
+  padding: 12px 5px;
+  margin-bottom: 2px;
 
   .image-box {
     width: 60px;
