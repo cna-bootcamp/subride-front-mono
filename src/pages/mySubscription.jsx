@@ -12,7 +12,7 @@ const getTotalFee = async (userId) => {
       params: { id: userId },
     });
 
-    const stringFee = data.totalfee.toLocaleString("ko-KR");
+    const stringFee = data ? data.totalfee.toLocaleString("ko-KR") : 0;
     return stringFee;
   } catch (err) {
     return err;
