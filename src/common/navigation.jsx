@@ -37,20 +37,20 @@ function Navigation() {
       <BottomNavigationAction
         label="Sub"
         component={Link}
-        to="/sub"
+        to="/mysub"
         icon={<GroupsIcon />}
-      />
-      <BottomNavigationAction
-        label="구독현황"
-        component={Link}
-        to="/mysubscription"
-        icon={<BookmarksIcon />}
       />
       <BottomNavigationAction
         label="추천"
         component={Link}
         to="/recommend"
         icon={<RecommendIcon />}
+      />
+      <BottomNavigationAction
+        label="구독현황"
+        component={Link}
+        to="/mysubscription"
+        icon={<BookmarksIcon />}
       />
     </BottomNavigation>
   );

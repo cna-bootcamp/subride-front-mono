@@ -1,12 +1,16 @@
 import styled from "@emotion/styled";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
+
+import ListItemAvatar from "@mui/material/ListItemAvatar";
+import Avatar from "@mui/material/Avatar";
+
 const SubItem = styled.li`
   width: 100%;
   background-color: #f7f7f7;
   display: flex;
   align-items: center;
   border-radius: 8px;
-  padding: 5px 0px;
+  padding: 10px 2px;
   margin: 10px 0px;
 
   .image-box {
@@ -41,18 +45,19 @@ const SubItem = styled.li`
   }
 `;
 
-function SubListItem({ item, handleClick }) {
+function SubListItem({ serviceId, serviceName, handleClick, description }) {
   return (
     <SubItem>
-      <div className="image-box">
-        <img
-          src={process.env.PUBLIC_URL + `/service/${item.serviceId}.png`}
-          alt={item.serviceName}
+      <ListItemAvatar>
+        <Avatar
+          src={process.env.PUBLIC_URL + `/service/${serviceId}.png`}
+          alt={serviceName}
         />
-      </div>
+      </ListItemAvatar>
+
       <div className="service">
-        <p className="service-name">{item.serviceName}</p>
-        <p>썹타러 가기</p>
+        <p className="service-name">{serviceName}</p>
+        <p>{description}</p>
       </div>
       <ArrowForwardIosIcon
         onClick={handleClick}

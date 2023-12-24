@@ -1,9 +1,8 @@
 import styled from "@emotion/styled";
 import SubListItem from "../components/sub/SubListItem";
-import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import api from "../utils/apiInstance";
-import BackHeader from "../common/backHeader";
+import { useNavigate } from "react-router-dom";
 
 const SubPage = styled.div`
   p {
@@ -22,18 +21,18 @@ const SubPage = styled.div`
   }
 `;
 
-function Sub({ user }) {
-  const [serviceList, setServiceList] = useState([]);
+function MySub({ user }) {
   const navigate = useNavigate();
+  const [serviceList, setServiceList] = useState([]);
 
-  function goMakeGroup(ele) {
-    console.log(ele);
-    navigate("/makeGroup");
+  function inDetail(groupId) {
+    navigate("/groupdetail", { state: groupId });
   }
+
   useEffect(() => {
     const getServiceList = async (userId) => {
       try {
-        const { data } = await api.get("/subscribe/cansub", {
+        const { data } = await api.get("/group/mylist", {
           params: { id: userId },
         });
         return data;
@@ -49,20 +48,22 @@ function Sub({ user }) {
 
   return (
     <>
-      <BackHeader text="Sub 타기"></BackHeader>
       <SubPage>
         <div className="title">
-          <p>지인과 함께 구독료를 아껴보세요</p>
+          <p>My Sub</p>
         </div>
 
         <ul>
           {serviceList.map((item) => (
             <SubListItem
-              key={item.serviceId}
-              serviceId={item.serviceId}
-              serviceName={item.serviceName}
-              handleClick={() => goMakeGroup(item)}
-              description={"썹타러 가기"}
+              key={item.id}
+              serviceId={item.subscribeDTO.serviceId}
+              serviceName={item.subscribeDTO.serviceName}
+              handleClick={() => inDetail(item.id)}
+              description={`썹타서 ${parseInt(
+                ((item.users.length - 1) / item.users.length) *
+                  item.subscribeDTO.fee
+              )}원 아끼는 중`}
             />
           ))}
         </ul>
@@ -71,4 +72,4 @@ function Sub({ user }) {
   );
 }
 
-export default Sub;
+export default MySub;
