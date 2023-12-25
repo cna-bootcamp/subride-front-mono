@@ -117,6 +117,7 @@ const RecommendContainer = styled.div`
   border-radius: 10px;
   position: relative;
   box-shadow: 0 3px 3px rgba(0, 0, 0, 0.2);
+  margin-bottom: 60px;
 
   p {
     margin: 0px;

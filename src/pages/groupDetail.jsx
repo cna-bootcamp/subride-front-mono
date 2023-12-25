@@ -121,6 +121,8 @@ function GroupDetail() {
   const [Data, setServiceData] = useState({
     subscribeDTO: { logo: "", serviceName: "" },
     users: [],
+    groupName: "",
+    billingDate: 0,
   });
 
   useEffect(() => {
@@ -145,7 +147,7 @@ function GroupDetail() {
   console.log(Data);
   return (
     <>
-      <BackHeader text="그룹1"></BackHeader>
+      <BackHeader text={Data.groupName}></BackHeader>
       <ImgContainer>
         <div>
           <div className="informContainer">
@@ -170,15 +172,18 @@ function GroupDetail() {
                 fontFamily: "KBFGTextM",
               }}
             >
-              매달, {Data.billingDate}일{" "}
-              {Math.ceil(Data.subscribeDTO.fee / Data.users.length)}원 결제돼요
+              매달 {Data.billingDate}일{" "}
+              {Math.ceil(
+                Data.subscribeDTO.fee / Data.users.length
+              ).toLocaleString("ko-KR")}
+              원 결제돼요
             </div>
           </div>
         </div>
 
         <div className="characterImgContainter">
           {Data.users.map((item) => (
-            <div className="characerNameImgContainer">
+            <div className="characerNameImgContainer" key={item.id}>
               <img
                 className="characterImg"
                 src={`/profile/${item.profileImg}.png`}
@@ -205,9 +210,9 @@ function GroupDetail() {
 
       <PaymentDetailCotaienr>
         {Data.users.map((item) => (
-          <div className="newcss">
+          <div className="newcss" key={item.id}>
             <div className="firstClass">
-              <div className="item">12.11</div>
+              <div className="item">12.{Data.billingDate}</div>
               <div className="item">
                 <div>{item.username}</div>
                 <div style={{ fontSize: "10px", color: "#C59AC9" }}>
@@ -222,7 +227,10 @@ function GroupDetail() {
             </div>
 
             <div className="item" style={{ fontFamily: "KBFGTextB" }}>
-              {Math.ceil(Data.subscribeDTO.fee / Data.users.length)}
+              {Math.ceil(
+                Data.subscribeDTO.fee / Data.users.length
+              ).toLocaleString("ko-KR")}
+              원
             </div>
           </div>
         ))}
