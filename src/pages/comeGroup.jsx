@@ -5,6 +5,15 @@ import { useNavigate } from "react-router-dom";
 
 import styled from "@emotion/styled";
 import api from "../utils/apiInstance";
+import Alert from "@mui/material/Alert";
+import BackHeader from "../common/backHeader";
+import { useState } from "react";
+
+import Dialog from "@mui/material/Dialog";
+import DialogActions from "@mui/material/DialogActions";
+import DialogContent from "@mui/material/DialogContent";
+import DialogTitle from "@mui/material/DialogTitle";
+import Button from "@mui/material/Button";
 
 const ImgAndTextContainer = styled.div`
   margin: 100px 30px 20px 30px;
@@ -54,14 +63,25 @@ const PasswordConatiner = styled.div`
 var userData = JSON.parse(window.sessionStorage.getItem("user"));
 
 function ComeGroup() {
+  const [open, setOpen] = useState(false);
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
   const navigate = useNavigate();
   function jiminClick() {
     var password = document.getElementById("비밀번호").value;
+
+    var ps = document.getElementById("비밀번호");
 
     const lastData = {
       id: userData.id,
       invitationCode: password,
     };
+    console.log(lastData);
 
     api
       .post("/group/join", lastData)
@@ -69,11 +89,31 @@ function ComeGroup() {
         navigate("/");
       })
       .catch(function (error) {
+        handleClickOpen();
+        ps.value = null;
         console.log(error);
       });
   }
   return (
     <>
+      <Dialog
+        open={open}
+        onClose={handleClose}
+        aria-labelledby="alert-dialog-title"
+        aria-describedby="alert-dialog-description"
+      >
+        <DialogTitle id="alert-dialog-title">
+          {"이미 그룹방에 참여했습니다."}
+        </DialogTitle>
+        <DialogContent></DialogContent>
+        <DialogActions>
+          <Button onClick={handleClose} autoFocus>
+            확인
+          </Button>
+        </DialogActions>
+      </Dialog>
+
+      <BackHeader text="그룹 참가하기"></BackHeader>
       <ImgAndTextContainer>
         <div className="welcome-text">환영합니다</div>
         <div className="detail-text">초대코드를 입력하고,</div>
@@ -81,7 +121,6 @@ function ComeGroup() {
 
         <img src={comeGroupImg} alt="곰돌이" />
       </ImgAndTextContainer>
-
       <PasswordConatiner>
         <div className="password-text">초대코드</div>
 
