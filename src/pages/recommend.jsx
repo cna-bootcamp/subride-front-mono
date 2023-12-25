@@ -15,12 +15,13 @@ const RecommendPage = styled.div`
   }
 
   .title {
-    font-size: 20px;
+    font-size: 16px;
     margin-top: 1rem;
+    color: #4a483f;
   }
 
   .sub-title {
-    font-size: 15px;
+    font-size: 12px;
     color: #767676;
     margin: 0.5rem 0rem;
     white-space: nowrap;
@@ -66,7 +67,10 @@ function Recommend({ user }) {
     <>
       <RecommendPage>
         <p className="title">
-          {user.userName}님을 위한 <span>구독서비스</span>
+          {user.userName}님을 위한{" "}
+          <span style={{ fontSize: "20px", color: "#F8A809" }}>
+            구독서비스 추천
+          </span>
         </p>
         <p className="sub-title">이번 달 생필품에 81,000원을 지출했어요</p>
         <ul className="category">

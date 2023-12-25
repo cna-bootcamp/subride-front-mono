@@ -4,6 +4,11 @@ import { useEffect, useState } from "react";
 import api from "../utils/apiInstance";
 import { useNavigate } from "react-router-dom";
 import Navigation from "../common/navigation";
+import CustomModal from "../components/main/CustomModal";
+import { Button } from "@mui/material";
+import GroupAddIcon from "@mui/icons-material/GroupAdd";
+import KeyIcon from "@mui/icons-material/Key";
+import AddIcon from "@mui/icons-material/Add";
 
 const SubPage = styled.div`
   p {
@@ -18,13 +23,33 @@ const SubPage = styled.div`
   }
 
   .title {
+    font-family: "KBFGDisplayB";
     margin-top: 10px;
+  }
+`;
+
+const ModalContent = styled.div`
+  text-align: center;
+
+  p {
+    margin: 3%;
+    font-size: 15px;
+  }
+
+  .button-box {
+    display: flex;
+    padding: 3%;
   }
 `;
 
 function MySub({ user }) {
   const navigate = useNavigate();
   const [serviceList, setServiceList] = useState([]);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const closeModal = () => {
+    setIsModalOpen(false);
+  };
 
   function inDetail(groupId) {
     navigate("/groupdetail", { state: groupId });
@@ -51,8 +76,30 @@ function MySub({ user }) {
     <>
       <SubPage>
         <div className="title">
-          <p>My Sub</p>
+          <p style={{ color: "rgb(248, 168, 9)" }}>
+            My <span style={{ color: "#4A483F" }}>그룹 </span>
+          </p>
         </div>
+        <ModalContent>
+          <div className="button-box">
+            <Button
+              sx={{ width: "100%", color: "#4A4646" }}
+              onClick={() => {
+                navigate("/makegroup");
+              }}
+            >
+              <GroupAddIcon />썹 만들기
+            </Button>
+            <Button
+              sx={{ width: "100%", color: "#4A4646" }}
+              onClick={() => {
+                navigate("/comegroup");
+              }}
+            >
+              <KeyIcon sx={{ marginRight: "10px" }} />썹 참여하기
+            </Button>
+          </div>
+        </ModalContent>
 
         <ul>
           {serviceList.map((item) => (
@@ -69,6 +116,7 @@ function MySub({ user }) {
           ))}
         </ul>
       </SubPage>
+
       <Navigation />
     </>
   );

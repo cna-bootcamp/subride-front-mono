@@ -79,10 +79,14 @@ function SuccessRoom() {
                 sx={{
                   // width: "70px",
                   height: "50px",
-                  backgroundColor: "#F2DC14",
+                  backgroundColor: "#F8A809",
                   color: "#000000",
                   borderRadius: 5,
                   fontSize: "18px",
+                  "&:hover": {
+                    backgroundColor: "#F8A809",
+                    boxShadow: "none",
+                  },
                 }}
                 variant="contained"
                 className="URL"

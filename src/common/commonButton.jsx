@@ -8,7 +8,7 @@ const BootstrapButton = styled(Button)({
   textTransform: "none",
   // margin: "20px",
   fontSize: 20,
-  backgroundColor: "#F2DC14",
+  backgroundColor: "#FFCC00",
   color: "#000000",
   borderRadius: 15,
 
@@ -16,7 +16,7 @@ const BootstrapButton = styled(Button)({
   // bottom: "0px",
 
   "&:hover": {
-    backgroundColor: "#F2DC14",
+    backgroundColor: "#FFCC00",
     boxShadow: "none",
   },
 });

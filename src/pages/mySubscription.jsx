@@ -51,7 +51,7 @@ const MySubscriptionPage = styled.div`
   .title {
     margin: 30px 0px;
     font-family: "KBFGDisplayB";
-    font-size: 25px;
+    font-size: 20px;
   }
 
   .pay-description {
@@ -120,11 +120,14 @@ function MySubscription({ user }) {
   return (
     <>
       <MySubscriptionPage>
-        <p className="title">MY 구독 서비스</p>
+        <p className="title" style={{ color: "rgb(248, 168, 9)" }}>
+          MY <span style={{ color: "#4a483f" }}> 구독 서비스</span>
+        </p>
         <div className="pay-description">
           <p>총 구독료</p>
           <p>{totalFee} 원</p>
         </div>
+
         <List
           sx={{ width: "100%", maxWidth: 360, bgcolor: "background.paper" }}
         >
@@ -137,6 +140,7 @@ function MySubscription({ user }) {
           <p>추가하기</p>
         </button>
       </MySubscriptionPage>
+
       <Navigation />
     </>
   );

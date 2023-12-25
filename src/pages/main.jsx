@@ -28,7 +28,7 @@ const BankbookContainer = styled.div`
 
   p.title {
     margin: 10px 0px 7px 0px;
-    color: #0e131a;
+    color: #4a483f;
     font-family: KBFGDisplayM;
   }
 
@@ -41,6 +41,7 @@ const BankbookContainer = styled.div`
   }
 
   .subtitle {
+    color: #4a483f;
     margin: 1px 0px;
     font-size: 13px;
     color: #0e131a;
@@ -50,10 +51,11 @@ const BankbookContainer = styled.div`
 
 const SubContainer = styled.div`
   background-color: #f8f8f8;
-  padding: 0.5rem;
+  padding: 1rem;
   width: 100%;
   border-radius: 10px;
   margin: 1rem 0rem;
+  color: #4a483f;
 
   .display-flex {
     display: flex;
@@ -111,8 +113,9 @@ const SubContainer = styled.div`
 `;
 
 const RecommendContainer = styled.div`
+  color: #4a483f;
   background-color: #f9eeee;
-  padding: 0.5rem 0.5rem 1.5rem 0.5rem;
+  padding: 1rem;
   width: 100%;
   border-radius: 10px;
   position: relative;
@@ -242,7 +245,10 @@ function Main({ user }) {
           src={`./통장test.png`}
           alt="bankbook"
         />
-        <p className="title">총 구독료 {totalFee}원</p>
+        <p className="title">
+          총 구독료
+          <span style={{ fontFamily: "KBFGDisplayB" }}> {totalFee}원 </span>
+        </p>
         <button
           className="subtitle-container"
           onClick={() => {
@@ -262,7 +268,7 @@ function Main({ user }) {
       </BankbookContainer>
       <SubContainer>
         <div className="display-flex">
-          <p className="title">나의 Sub</p>
+          <p className="title">My 그룹</p>
           <Button onClick={() => setIsModalOpen(true)} sx={{ minWidth: "0px" }}>
             <AddIcon
               sx={{
@@ -295,7 +301,7 @@ function Main({ user }) {
 
       <RecommendContainer>
         <p>
-          추천서비스 <span>12월 21일 기준</span>
+          구독서비스 추천 <span>12월 21일 기준</span>
         </p>
         <div className="content">
           <img src={bunnyKing} alt="kingOfSomething" />
