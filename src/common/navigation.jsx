@@ -1,5 +1,5 @@
 import { BottomNavigation, BottomNavigationAction } from "@mui/material";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import HomeIcon from "@mui/icons-material/Home";
 import GroupsIcon from "@mui/icons-material/Groups";
 import BookmarksIcon from "@mui/icons-material/Bookmarks";
@@ -7,8 +7,16 @@ import RecommendIcon from "@mui/icons-material/Recommend";
 import { useState } from "react";
 import { memo } from "react";
 
+const path = {
+  "/": 0,
+  "/mysub": 1,
+  "/recommend": 2,
+  "/mysubscription": 3,
+};
+
 function Navigation() {
-  const [value, setValue] = useState(0);
+  const { pathname } = useLocation();
+  const [value, setValue] = useState(path[pathname]);
 
   return (
     <BottomNavigation

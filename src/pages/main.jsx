@@ -9,8 +9,9 @@ import CustomModal from "../components/main/CustomModal";
 import { Button } from "@mui/material";
 import api from "../utils/apiInstance";
 import { useNavigate } from "react-router-dom";
-import characterKiki from "../assets/character1.png";
+import bunnyKing from "../assets/bunnyKing.png";
 import Header from "../common/header";
+import Navigation from "../common/navigation";
 
 const BankbookContainer = styled.div`
   text-align: center;
@@ -117,6 +118,10 @@ const RecommendContainer = styled.div`
   position: relative;
   box-shadow: 0 3px 3px rgba(0, 0, 0, 0.2);
 
+  p {
+    margin: 0px;
+  }
+
   span {
     color: #878787;
     font-size: 10px;
@@ -129,10 +134,11 @@ const RecommendContainer = styled.div`
     flex-direction: column;
     justify-content: center;
     align-items: center;
-  }
+    padding: 15px;
 
-  img {
-    width: 110px;
+    img {
+      width: 150px;
+    }
   }
 
   .bottom {
@@ -290,8 +296,8 @@ function Main({ user }) {
           추천서비스 <span>12월 21일 기준</span>
         </p>
         <div className="content">
-          <img src={characterKiki} alt="kingOfSomething" />
-          <p>이번 달 당신은 살림왕!</p>
+          <img src={bunnyKing} alt="kingOfSomething" />
+          <p>이번 달 당신은 살림왕👑</p>
           <button
             className="bottom"
             onClick={() => {
@@ -327,6 +333,7 @@ function Main({ user }) {
           </div>
         </ModalContent>
       </CustomModal>
+      <Navigation />
     </>
   );
 }

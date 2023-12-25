@@ -10,7 +10,7 @@ const color = {
   },
 };
 const StyledItem = styled.li`
-  margin: 2px 0px;
+  flex: 1 1 20%;
 
   button {
     border: none;
@@ -18,15 +18,14 @@ const StyledItem = styled.li`
     border-radius: 9px;
     overflow: visible;
     cursor: pointer;
-  }
-
-  .category-button {
+    width: 95%;
+    min-height: 30px;
+    white-space: nowrap;
     background-color: ${(props) =>
       props.isSelected ? color[props.name].button : "#eeeeee"};
   }
 
   .category-name {
-    padding: 8px 14px;
     font-size: 13px;
     font-family: "KBFGDisplayL";
     color: ${(props) => (props.isSelected ? "white" : "#767676")};
@@ -34,8 +33,6 @@ const StyledItem = styled.li`
 `;
 
 function CategoryItem({ name, selectItem, isSelected }) {
-  console.log(name, isSelected);
-  console.log(isSelected ? color[name].button : "#eeeeee");
   return (
     <StyledItem isSelected={isSelected} name={name}>
       <button className="category-button" onClick={() => selectItem(name)}>

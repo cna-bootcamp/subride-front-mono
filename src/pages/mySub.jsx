@@ -3,6 +3,7 @@ import SubListItem from "../components/sub/SubListItem";
 import { useEffect, useState } from "react";
 import api from "../utils/apiInstance";
 import { useNavigate } from "react-router-dom";
+import Navigation from "../common/navigation";
 
 const SubPage = styled.div`
   p {
@@ -68,6 +69,7 @@ function MySub({ user }) {
           ))}
         </ul>
       </SubPage>
+      <Navigation />
     </>
   );
 }
