@@ -27,7 +27,7 @@ function Navigation() {
       }}
       sx={{
         "& .Mui-selected, .Mui-selected > svg": {
-          color: "#F2DC14",
+          color: "#F8A809",
         },
         position: "fixed",
         width: "100%",
