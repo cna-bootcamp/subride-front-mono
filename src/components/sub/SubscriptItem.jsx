@@ -14,7 +14,9 @@ function SubscriptItem({ item, index }) {
       </ListItemAvatar>
       <ListItemText
         primary={item.serviceName}
-        secondary={`매월 ${index + 1}일 ${item.fee.toLocaleString("ko-KR")}원`}
+        secondary={`매월 ${index + 1}일 - ${item.fee.toLocaleString(
+          "ko-KR"
+        )}원`}
         primaryTypographyProps={{ fontSize: "15px" }}
       />
     </ListItem>
