@@ -56,8 +56,6 @@ const PasswordConatiner = styled.div`
   }
 `;
 
-var userData = JSON.parse(window.sessionStorage.getItem("user"));
-
 function ComeGroup() {
   const [open, setOpen] = useState(false);
   const handleClickOpen = () => {
@@ -69,6 +67,7 @@ function ComeGroup() {
   };
   const navigate = useNavigate();
   function jiminClick() {
+    var userData = JSON.parse(window.sessionStorage.getItem("user"));
     var password = document.getElementById("비밀번호").value;
 
     var ps = document.getElementById("비밀번호");
