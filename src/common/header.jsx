@@ -25,7 +25,7 @@ function Header() {
         >
           <Link to="/" style={{ textDecoration: "none", color: "#0E131A" }}>
             <img
-              style={{ height: "20px", objectFit: "cover" }}
+              style={{ height: "25px", objectFit: "cover" }}
               src={`./메인로고.png`}
               alt="로고"
             ></img>
