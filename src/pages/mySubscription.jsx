@@ -131,8 +131,12 @@ function MySubscription({ user }) {
         <List
           sx={{ width: "100%", maxWidth: 360, bgcolor: "background.paper" }}
         >
-          {mySubscriptionList.map((item) => (
-            <SubscriptItem key={item.serviceId} item={item}></SubscriptItem>
+          {mySubscriptionList.map((item, index) => (
+            <SubscriptItem
+              key={item.serviceId}
+              item={item}
+              index={index}
+            ></SubscriptItem>
           ))}
         </List>
         <button className="add-button">

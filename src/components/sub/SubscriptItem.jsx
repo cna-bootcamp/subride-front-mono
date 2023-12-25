@@ -3,7 +3,7 @@ import ListItemText from "@mui/material/ListItemText";
 import ListItemAvatar from "@mui/material/ListItemAvatar";
 import Avatar from "@mui/material/Avatar";
 
-function SubscriptItem({ item }) {
+function SubscriptItem({ item, index }) {
   return (
     <ListItem sx={{ padding: "10px 0px" }}>
       <ListItemAvatar>
@@ -14,7 +14,7 @@ function SubscriptItem({ item }) {
       </ListItemAvatar>
       <ListItemText
         primary={item.serviceName}
-        secondary={`${item.fee.toLocaleString("ko-KR")}원`}
+        secondary={`매월 ${index + 1}일 ${item.fee.toLocaleString("ko-KR")}원`}
         primaryTypographyProps={{ fontSize: "15px" }}
       />
     </ListItem>
