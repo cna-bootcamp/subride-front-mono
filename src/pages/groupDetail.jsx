@@ -122,6 +122,7 @@ function GroupDetail() {
     subscribeDTO: { logo: "", serviceName: "" },
     users: [],
     groupName: "",
+    billingDate: 0,
   });
 
   useEffect(() => {
@@ -171,7 +172,7 @@ function GroupDetail() {
                 fontFamily: "KBFGTextM",
               }}
             >
-              매달, {Data.billingDate}일{" "}
+              매달 {Data.billingDate}일{" "}
               {Math.ceil(
                 Data.subscribeDTO.fee / Data.users.length
               ).toLocaleString("ko-KR")}
@@ -211,7 +212,7 @@ function GroupDetail() {
         {Data.users.map((item) => (
           <div className="newcss" key={item.id}>
             <div className="firstClass">
-              <div className="item">12.11</div>
+              <div className="item">12.{Data.billingDate}</div>
               <div className="item">
                 <div>{item.username}</div>
                 <div style={{ fontSize: "10px", color: "#C59AC9" }}>
