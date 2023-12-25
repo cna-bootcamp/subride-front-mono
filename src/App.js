@@ -5,12 +5,13 @@ import Sub from "./pages/sub";
 import MySub from "./pages/mySub";
 import Test from "./pages/test";
 import MakeGroup from "./pages/makeGroup";
+import MakeSubGroup from "./pages/makeSubGroup";
 import GroupDetail from "./pages/groupDetail";
 import SuccessRoom from "./pages/successRoom";
 import ComeGroup from "./pages/comeGroup";
 import Login from "./pages/login";
 import MySubscription from "./pages/mySubscription";
-import Recommend from './pages/recommend'
+import Recommend from "./pages/recommend";
 import PrivateRoute from "./pages/privateRouter";
 
 function App() {
@@ -21,15 +22,19 @@ function App() {
       <Routes>
         <Route element={<PrivateRoute isLoggedIn={user} />}>
           <Route path="/" element={<Main user={user} />} />
-          <Route path="/sub" element={<Sub user={user}/>} />
-          <Route path="/mysub" element={<MySub user={user}/>} />
+          <Route path="/sub" element={<Sub user={user} />} />
+          <Route path="/mysub" element={<MySub user={user} />} />
           <Route path="/test" element={<Test />} />
           <Route path="/makegroup" element={<MakeGroup />} />
+          <Route path="/makesubgroup" element={<MakeSubGroup />} />
           <Route path="/successroom" element={<SuccessRoom />} />
           <Route path="/comegroup" element={<ComeGroup />} />
-          <Route path="/mysubscription" element={<MySubscription user={user}/>} />
+          <Route
+            path="/mysubscription"
+            element={<MySubscription user={user} />}
+          />
           <Route path="/groupdetail" element={<GroupDetail />} />
-          <Route path="/recommend" element={<Recommend user={user}/>} />
+          <Route path="/recommend" element={<Recommend user={user} />} />
         </Route>
         <Route path="/login" element={<Login setUser={setUser} />} />
       </Routes>

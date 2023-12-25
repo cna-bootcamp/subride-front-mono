@@ -28,7 +28,7 @@ function Sub({ user }) {
 
   function goMakeGroup(ele) {
     console.log(ele);
-    navigate("/makeGroup");
+    navigate("/makeSubGroup", { state: ele });
   }
   useEffect(() => {
     const getServiceList = async (userId) => {

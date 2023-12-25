@@ -9,7 +9,7 @@ import { useLocation } from "react-router";
 const ImgContainer = styled.div`
   width: 100dvw;
   height: 336px;
-  background-color: #eeeeee;
+  background-color: #fed337;
   position: absolute;
   left: 0px;
   padding: 30px;
@@ -26,7 +26,7 @@ const ImgContainer = styled.div`
 
   .informContainer {
     margin-top: 70px;
-    background-color: #f6f6f6;
+    background-color: #ffffff;
     width: 323px;
     height: 95px;
     border-radius: 15px;
@@ -214,6 +214,11 @@ function GroupDetail() {
                   #자동이체
                 </div>
               </div>
+              <img
+                style={{ paddingLeft: "10px", width: "auto", height: "20px" }}
+                src={`/KB로고.png`}
+                alt="kb로고"
+              />
             </div>
 
             <div className="item" style={{ fontFamily: "KBFGTextB" }}>
