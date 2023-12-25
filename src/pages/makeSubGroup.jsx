@@ -37,10 +37,13 @@ function makeListProps(lists) {
   };
 }
 
-function MakeGroup() {
+function MakeSubGroup() {
   const [account, setAccount] = useState("");
   const [member, setmember] = useState("");
   const [payDate, setPayDate] = useState("");
+  const { state } = useLocation();
+
+  console.log(state);
 
   const handleChange = (event) => {
     setAccount(event.target.value);
@@ -65,7 +68,6 @@ function MakeGroup() {
   function jiminClick() {
     var groupTitle = document.getElementById("그룹이름").value;
     var serviceInput = document.getElementById("서비스선택").value;
-    var dayInputs = document.getElementById("결제일선택").value;
 
     const lastData = {
       groupAccount: account,
@@ -125,34 +127,14 @@ function MakeGroup() {
         <Stack spacing={4}>
           <TextField id="그룹이름" label="그룹 이름" variant="standard" />
 
-          <Autocomplete
-            {...serviceProps}
+          <TextField
             id="서비스선택"
-            disableClearable
-            renderOption={(params, options) => (
-              <Box {...params} label="서비스" variant="standard">
-                <img
-                  loading="lazy"
-                  width="20"
-                  srcSet={`./service/${options.serviceId}.png`}
-                  alt="로고 이미지"
-                  style={{ marginRight: "10px" }}
-                />
-
-                <div>
-                  {options.serviceName} {options.fee}
-                </div>
-              </Box>
-            )}
-            renderInput={(params) => (
-              <div>
-                <TextField
-                  {...params}
-                  label="구독서비스 선택하기"
-                  variant="standard"
-                />
-              </div>
-            )}
+            label="구독서비스"
+            defaultValue={state.serviceName}
+            InputProps={{
+              readOnly: true,
+            }}
+            variant="standard"
           />
 
           <FormControl variant="standard" sx={{ m: 1, minWidth: 120 }}>
@@ -209,4 +191,4 @@ function MakeGroup() {
   );
 }
 
-export default MakeGroup;
+export default MakeSubGroup;

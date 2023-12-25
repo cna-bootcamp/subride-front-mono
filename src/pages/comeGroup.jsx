@@ -1,14 +1,10 @@
-import Box from "@mui/material/Box";
 import comeGroupImg from "../assets/comeGroup.png";
 import CommonButton from "../common/commonButton";
 import { useNavigate } from "react-router-dom";
-
 import styled from "@emotion/styled";
 import api from "../utils/apiInstance";
-import Alert from "@mui/material/Alert";
 import BackHeader from "../common/backHeader";
 import { useState } from "react";
-
 import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
