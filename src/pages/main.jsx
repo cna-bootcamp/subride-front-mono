@@ -217,6 +217,7 @@ function Main({ user }) {
 
   useEffect(() => {
     getGroupList(user.id).then((result) => {
+      console.log(result);
       setSubGroupList(result);
     });
 

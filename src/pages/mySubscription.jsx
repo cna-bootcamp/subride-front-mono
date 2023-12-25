@@ -80,7 +80,8 @@ const getTotalFee = async (userId) => {
       params: { id: userId },
     });
 
-    const totalFee = data.totalfee || 37790;
+    // console.log(data.data.totalfee);
+    const totalFee = data.data.totalfee;
     return totalFee.toLocaleString("ko-KR");
   } catch (err) {
     return err;

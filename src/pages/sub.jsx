@@ -30,12 +30,14 @@ function Sub({ user }) {
     console.log(ele);
     navigate("/makeSubGroup", { state: ele });
   }
+
   useEffect(() => {
     const getServiceList = async (userId) => {
       try {
         const { data } = await api.get("/subscribe/cansub", {
           params: { id: userId },
         });
+        console.log(data);
         return data;
       } catch (err) {
         return err;
