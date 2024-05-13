@@ -1,6 +1,6 @@
 import axios from "axios";
 
-export const API_BASE_URL = "http://gudokjoa5.165.192.105.60.nip.io";
+export const API_BASE_URL = "http://localhost:18081";
 
 const apiInstance = axios.create({
   baseURL: `${API_BASE_URL}/api`,
@@ -8,5 +8,19 @@ const apiInstance = axios.create({
     "Content-type": "application/json",
   },
 });
+
+apiInstance.interceptors.request.use(
+  (config) => {
+    const token = sessionStorage.getItem("accessToken");
+    
+    if (token) {
+      config.headers.Authorization = `Bearer ${token}`;
+    }
+    return config;
+  },
+  (error) => {
+    return Promise.reject(error);
+  }
+);
 
 export default apiInstance;

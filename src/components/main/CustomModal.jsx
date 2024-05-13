@@ -4,7 +4,7 @@ function CustomModal({ isOpen, closeModal, children }) {
   return (
     <Modal open={isOpen} onClose={closeModal}>
       <Paper
-        elevation={2}
+        elevation={3}
         sx={{
           position: "absolute",
           width: "100%",

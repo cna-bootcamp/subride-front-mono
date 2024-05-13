@@ -1,11 +1,6 @@
-import { useState, useEffect } from "react";
-
+import { useState, useEffect, useCallback } from "react";
 import styled from "@emotion/styled";
-import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
-import GroupAddIcon from "@mui/icons-material/GroupAdd";
-import KeyIcon from "@mui/icons-material/Key";
-import AddIcon from "@mui/icons-material/Add";
-import CustomModal from "../components/main/CustomModal";
+import { ArrowForwardIos } from "@mui/icons-material";
 import { Button } from "@mui/material";
 import api from "../utils/apiInstance";
 import { useNavigate } from "react-router-dom";
@@ -38,6 +33,7 @@ const BankbookContainer = styled.div`
     border: 0;
     background-color: transparent;
     margin: 0 auto;
+    cursor: pointer; 
   }
 
   .subtitle {
@@ -85,7 +81,7 @@ const SubContainer = styled.div`
     background-color: pink;
     margin: 0rem 1rem 0rem 0rem;
     object-fit: cover;
-
+    cursor: pointer; 
     p {
       font-size: 10px;
       overflow: hidden;
@@ -171,20 +167,6 @@ const RecommendContainer = styled.div`
   }
 `;
 
-const ModalContent = styled.div`
-  text-align: center;
-
-  p {
-    margin: 3%;
-    font-size: 15px;
-  }
-
-  .button-box {
-    display: flex;
-    padding: 3%;
-  }
-`;
-
 const getGroupList = async (userId) => {
   try {
     const { data } = await api.get("/group/mylist", {
@@ -202,80 +184,130 @@ const getTotalFee = async (userId) => {
       params: { id: userId },
     });
 
-    const stringFee = data ? data.totalfee.toLocaleString("ko-KR") : 0;
-    return stringFee;
+    return data ? data : { "totalfee": 0, "totalSavedAmount": 0 };
   } catch (err) {
     return err;
   }
 };
 
+const getSubscriptionList = async (userId) => {
+  try {
+    const { data } = await api.get("/subscribe/mylist", {
+      params: { id: userId },
+    });
+    return data;
+  } catch (err) {
+    return err;
+  }
+};
+
+const getYesterdayDate = () => {
+  const today = new Date();
+  const yesterday = new Date(today);
+  yesterday.setDate(today.getDate() - 1);
+
+  const month = yesterday.getMonth() + 1;
+  const day = yesterday.getDate();
+
+  return `${month}월 ${day}일 기준`;
+};
+
 function Main({ user }) {
   const navigate = useNavigate();
   const [subGroupList, setSubGroupList] = useState([]);
-  const [totalFee, setTotalFee] = useState(0);
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const closeModal = () => {
-    setIsModalOpen(false);
-  };
+  const [totalFee, setTotalFee] = useState({});
+  const [subscriptionList, setSubscriptionList] = useState([]);
+
+  const fetchGroupList = useCallback(async () => {
+    try {
+      const result = await getGroupList(user.id);
+      setSubGroupList(result);
+    } catch (err) {
+      console.log(err);
+    }
+  }, [user]);
+
+  const fetchToalFee = useCallback(async () => {
+    try {
+      const result = await getTotalFee(user.id);
+      setTotalFee(result);
+    } catch (err) {
+      console.log(err);
+    }
+  }, [user]);
+
+  const fetchSubscriptionList = useCallback(async () => {
+    try {
+      const result = await getSubscriptionList(user.id);
+      setSubscriptionList(result);
+    } catch (err) {
+      console.log(err);
+    }
+  }, [user]);
 
   useEffect(() => {
-    getGroupList(user.id).then((result) => {
-      console.log(result);
-      setSubGroupList(result);
-    });
+    fetchGroupList();
+    fetchToalFee();
+    fetchSubscriptionList();
+  }, [fetchGroupList, fetchToalFee, fetchSubscriptionList]);
 
-    getTotalFee(user.id).then((result) => {
-      console.log(result);
-      setTotalFee(result);
-    });
-  }, [user.id]);
+  const inDetail = (groupId) => {
+    navigate("/groupdetail", { state: { groupId: groupId } });
+  };
 
-  function inDetail(groupId) {
-    console.log(groupId);
-    navigate("/groupdetail", { state: groupId });
-  }
+  const handleNavigateToMySub = () => {
+    navigate("/mysub");
+  };
+
+  const handleNavigateToMySubscription = () => {
+    navigate("/mysubscription");
+  };
+
+  const handleServiceClick = useCallback(
+    (serviceId) => {
+      navigate(`/service/${serviceId}`, { state: { serviceId: serviceId, alreadyEnroll: true } });
+    },
+    [navigate]
+  );
+
+  const handleLogout = () => {
+    // 로그아웃 처리 로직 추가
+    sessionStorage.removeItem("user");
+    sessionStorage.removeItem("accessToken");
+    sessionStorage.removeItem("refreshToken");
+    navigate("/login");
+  };
 
   return (
     <>
-      <Header></Header>
+      <Header handleLogout={handleLogout} />
       <BankbookContainer>
-        {/* <img src={bankbookImage} alt="bankbook" /> */}
         <img
-          style={{ height: "100px", objectFit: "cover" }}
-          src={`./통장test.png`}
+          style={{ width: "100px", height: "100px", objectFit: "cover", borderRadius: "50%" }}
+          src={totalFee.feelevel ? "./feelevel" + totalFee.feelevel+".jpeg" : `./feelevel0.jpeg`}
           alt="bankbook"
         />
         <p className="title">
           총 구독료
-          <span style={{ fontFamily: "KBFGDisplayB" }}> {totalFee}원 </span>
+          <span style={{ fontFamily: "KBFGDisplayB" }}> {totalFee.totalfee && totalFee.totalfee.toLocaleString("ko-KR")}원 </span>
         </p>
-        <button
-          className="subtitle-container"
-          onClick={() => {
-            navigate("/sub");
-          }}
-        >
-          <p className="subtitle">썹타고 구독료 아끼러 가기 </p>
-          <ArrowForwardIosIcon
-            sx={{
-              fontSize: "14px",
-              marginLeft: "5px",
-              color: "rgba(0, 0, 0, 0.6)",
-              width: "20px",
-            }}
-          />
+        <button className="subtitle-container" onClick={() => navigate("/sub")}>
+          <p className="subtitle">썹 타고 매월 최대{' '}
+            <span style={{ color: '#ff0000', fontSize: '18px', fontWeight: 'bold' }}>
+              {totalFee.totalSavedAmount && totalFee.totalSavedAmount.toLocaleString("ko-KR")}원
+            </span>{' '}
+            아끼러 가기
+          </p>
+          <ArrowForwardIos fontSize="small" />
         </button>
       </BankbookContainer>
+
+
       <SubContainer>
         <div className="display-flex">
-          <p className="title">My 그룹</p>
-          <Button onClick={() => setIsModalOpen(true)} sx={{ minWidth: "0px" }}>
-            <AddIcon
-              sx={{
-                fontSize: "25px",
-                color: "rgba(0, 0, 0, 0.6)",
-              }}
-            />
+          <p className="title">{user.userName}님의 썹</p>
+          <Button onClick={handleNavigateToMySub} sx={{ marginRight: '-1.5rem' }}>
+            <ArrowForwardIos />
           </Button>
         </div>
         <ul className="images">
@@ -287,11 +319,8 @@ function Main({ user }) {
             >
               <img
                 className="image-profile"
-                src={
-                  process.env.PUBLIC_URL +
-                  `/service/${item.subscribeDTO.serviceId}.png`
-                }
-                alt={item.subscribeDTO.serviceId}
+                src={`${process.env.PUBLIC_URL}/service/${item.subscribeDTO.logo}`}
+                alt={item.subscribeDTO.serviceName}
               />
               <p>{item.groupName}</p>
             </li>
@@ -299,48 +328,44 @@ function Main({ user }) {
         </ul>
       </SubContainer>
 
+      <SubContainer>
+        <div className="display-flex">
+          <p className="title">{user.userName}님의 구독 서비스</p>
+          <Button onClick={handleNavigateToMySubscription} sx={{ marginRight: '-1.5rem' }}>
+            <ArrowForwardIos />
+          </Button>
+        </div>
+        <ul className="images">
+          {subscriptionList.map((item) => (
+            <li key={item.serviceId} className="image-box" onClick={() => handleServiceClick(item.serviceId)}>
+              <img
+                className="image-profile"
+                src={`${process.env.PUBLIC_URL}/service/${item.logo}`}
+                alt={item.serviceName}
+              />
+              <p>{item.serviceName}</p>
+            </li>
+          ))}
+        </ul>
+      </SubContainer>
+
       <RecommendContainer>
         <p>
-          구독서비스 추천 <span>12월 21일 기준</span>
+          구독서비스 추천 <span>{getYesterdayDate()}</span>
         </p>
         <div className="content">
           <img src={bunnyKing} alt="kingOfSomething" />
-          <p>이번 달 당신은 살림왕👑</p>
+          <p>지난 한 달 당신은 살림왕👑</p>
           <button
             className="bottom"
-            onClick={() => {
-              navigate("/recommend");
-            }}
+            onClick={() => navigate("/recommend", { state: { defaultCategory: 1 } })}
           >
             <p>지출 내역 기반으로 구독 서비스를 추천해드려요</p>
-            <ArrowForwardIosIcon sx={{ fontSize: "11px", marginLeft: "2px" }} />
+            <ArrowForwardIos fontSize="small" />
           </button>
         </div>
       </RecommendContainer>
 
-      <CustomModal isOpen={isModalOpen} closeModal={closeModal}>
-        <ModalContent>
-          <p>새로운 썹</p>
-          <div className="button-box">
-            <Button
-              sx={{ width: "100%", color: "#4A4646" }}
-              onClick={() => {
-                navigate("/makegroup");
-              }}
-            >
-              <GroupAddIcon />썹 만들기
-            </Button>
-            <Button
-              sx={{ width: "100%", color: "#4A4646" }}
-              onClick={() => {
-                navigate("/comegroup");
-              }}
-            >
-              <KeyIcon sx={{ marginRight: "10px" }} />썹 참여하기
-            </Button>
-          </div>
-        </ModalContent>
-      </CustomModal>
       <Navigation />
     </>
   );

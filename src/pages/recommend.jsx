@@ -1,7 +1,11 @@
+import { useState, useEffect, useCallback } from "react";
+import api from "../utils/apiInstance";
 import styled from "@emotion/styled";
-import CategoryItem from "../components/recommend/categoryItem";
-import { useState } from "react";
+import { useLocation } from "react-router-dom";
+import { Grid, Typography, Button, Card, CardContent, CardMedia } from '@mui/material';
 import Navigation from "../common/navigation";
+import BackHeader from "../common/backHeader";
+import { useNavigate } from 'react-router-dom';
 
 const RecommendPage = styled.div`
   color: #4a4646;
@@ -16,7 +20,7 @@ const RecommendPage = styled.div`
 
   .title {
     font-size: 16px;
-    margin-top: 1rem;
+    margin-top: 40px;
     color: #4a483f;
   }
 
@@ -26,45 +30,83 @@ const RecommendPage = styled.div`
     margin: 0.5rem 0rem;
     white-space: nowrap;
   }
-
-  ul {
-    list-style: none;
-    padding: 0px;
-    margin: 0px;
-    width: 100%;
-    display: flex;
-    justify-content: space-between;
-    flex-wrap: wrap;
-    gap: 5px 0px;
-  }
-
-  img {
-    width: 100%;
-  }
 `;
 
-const category = [
-  "음료",
-  "식품",
-  "생필품",
-  "건강",
-  "뷰티",
-  "반려동물",
-  "패션잡화",
-  "인테리어",
-  "취미",
-];
+const StyledCard = styled(Card)(({ theme }) => ({
+  '&:hover': {
+    boxShadow: theme.shadows[5],
+    cursor: 'pointer',
+  },
+}));
+
+const getCategories = async () => {
+  try {
+    const { data } = await api.get("/categories");
+    return data;
+  } catch (err) {
+    return err;
+  }
+};
+
+const getEnrollList = async (userId, categoryId) => {
+  try {
+    const { data } = await api.get("/subscribe/canenroll", {
+      params: { id: userId, category_id: categoryId },
+    });
+    return data;
+  } catch (err) {
+    return err;
+  }
+};
 
 function Recommend({ user }) {
-  const [selectedItem, setSelectedItem] = useState("생필품");
+  const navigate = useNavigate();
+  const location = useLocation();
+  const defaultCategory = location.state?.defaultCategory || 1;
+  const [selectedCategory, setSelectedCategory] = useState(defaultCategory);
+  const [categoryList, setCategoryList] = useState([]);
+  const [subscribeList, setSubscribeList] = useState([]);
 
-  const selectItem = (itemName) => {
-    if (itemName !== "생필품" && itemName !== "반려동물") return;
-    setSelectedItem(itemName);
-  };
+  const handleCategoryClick = useCallback((category) => {
+    setSelectedCategory(category);
+  }, []);
+
+  const handleServiceClick = useCallback((serviceId) => {
+    navigate(`/service/${serviceId}`, { state: { serviceId: serviceId, alreadyEnroll:false } });
+  }, [navigate]);
+
+  const fetchCategories = useCallback(async () => {
+    try {
+      const result = await getCategories();
+      console.log(result);
+      setCategoryList(result);
+    } catch (err) {
+      console.log(err);
+    }
+  }, []);
+
+  const fetchEnrollList = useCallback(async (userId, categoryId) => {
+    try {
+      const result = await getEnrollList(userId, categoryId);
+      console.log(result);
+      setSubscribeList(result);
+    } catch (err) {
+      console.log(err);
+    }
+  }, []);
+
+  useEffect(() => {
+    fetchCategories();
+    fetchEnrollList(user.id, defaultCategory);
+  }, [fetchCategories, fetchEnrollList, user.id, defaultCategory]);
+
+  useEffect(() => {
+    fetchEnrollList(user.id, selectedCategory);
+  }, [fetchEnrollList, user.id, selectedCategory]);
 
   return (
     <>
+      <BackHeader text="추천"></BackHeader>
       <RecommendPage>
         <p className="title">
           {user.userName}님을 위한{" "}
@@ -73,21 +115,54 @@ function Recommend({ user }) {
           </span>
         </p>
         <p className="sub-title">이번 달 생필품에 81,000원을 지출했어요</p>
-        <ul className="category">
-          {category.map((item, index) => (
-            <CategoryItem
-              key={index}
-              name={item}
-              selectItem={selectItem}
-              isSelected={selectedItem === item}
-            ></CategoryItem>
-          ))}
-        </ul>
-        <img
-          src={process.env.PUBLIC_URL + `/${selectedItem}.png`}
-          alt={selectedItem + " king"}
-        />
       </RecommendPage>
+
+      <Grid container spacing={2} sx={{ mt: 4 }}>
+        {categoryList.map((item) => (
+          <Grid item xs={4} key={item.id}>
+            <Button
+              fullWidth
+              variant={selectedCategory === item.id ? "contained" : "outlined"}
+              color={selectedCategory === item.id ? "primary" : "inherit"}
+              onClick={() => handleCategoryClick(item.id)}
+            >
+              {item.name}
+            </Button>
+          </Grid>
+        ))}
+      </Grid>
+
+      <Grid container spacing={2} sx={{ mt: 4, mb: 8 }}>
+        {subscribeList.map((item) => (
+          <Grid item xs={6} sm={4} md={3} key={item.serviceId}>
+            <StyledCard
+              sx={{ height: '100%', display: 'flex', flexDirection: 'column' }}
+              onClick={() => handleServiceClick(item.serviceId)}
+            >
+              <CardMedia component="img" height="140" image={process.env.PUBLIC_URL +
+                `/service/` + item.logo} alt={item.serviceName} />
+              <CardContent sx={{ flexGrow: 1 }}>
+                <Typography gutterBottom variant="h5" component="div">
+                  {item.serviceName}
+                </Typography>
+                <Typography variant="body2" color="text.secondary" sx={{
+                  display: '-webkit-box',
+                  WebkitLineClamp: '2',
+                  WebkitBoxOrient: 'vertical',
+                  overflow: 'hidden',
+                  textOverflow: 'ellipsis',
+                }}>
+                  {item.description}
+                </Typography>
+                <Typography variant="body2" color="text.primary">
+                  {item.fee.toLocaleString("ko-KR")}원
+                </Typography>
+              </CardContent>
+            </StyledCard>
+          </Grid>
+        ))}
+      </Grid>
+
       <Navigation />
     </>
   );

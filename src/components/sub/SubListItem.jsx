@@ -12,6 +12,7 @@ const SubItem = styled.li`
   border-radius: 8px;
   padding: 12px 5px;
   margin-bottom: 2px;
+  cursor: pointer; 
 
   .image-box {
     width: 60px;
@@ -45,12 +46,12 @@ const SubItem = styled.li`
   }
 `;
 
-function SubListItem({ serviceId, serviceName, handleClick, description }) {
+function SubListItem({ serviceId, serviceName, logo, handleClick, description }) {
   return (
-    <SubItem>
+    <SubItem onClick={handleClick}>
       <ListItemAvatar>
         <Avatar
-          src={process.env.PUBLIC_URL + `/service/${serviceId}.png`}
+          src={process.env.PUBLIC_URL + `/service/${logo}`}
           alt={serviceName}
         />
       </ListItemAvatar>
@@ -60,7 +61,6 @@ function SubListItem({ serviceId, serviceName, handleClick, description }) {
         <p>{description}</p>
       </div>
       <ArrowForwardIosIcon
-        onClick={handleClick}
         sx={{ fontSize: "16px", marginLeft: "auto" }}
       />
     </SubItem>

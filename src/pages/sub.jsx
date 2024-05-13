@@ -1,7 +1,7 @@
 import styled from "@emotion/styled";
 import SubListItem from "../components/sub/SubListItem";
 import { useNavigate } from "react-router-dom";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import api from "../utils/apiInstance";
 import BackHeader from "../common/backHeader";
 
@@ -18,7 +18,7 @@ const SubPage = styled.div`
   }
 
   .title {
-    margin-top: 10px;
+    margin-top: 40px;
   }
 `;
 
@@ -28,30 +28,25 @@ function Sub({ user }) {
 
   function goMakeGroup(ele) {
     console.log(ele);
-    navigate("/makeSubGroup", { state: ele });
+    navigate("/makeGroup", { state: ele });
   }
 
-  useEffect(() => {
-    const getServiceList = async (userId) => {
-      try {
-        const { data } = await api.get("/subscribe/cansub", {
-          params: { id: userId },
-        });
-        console.log(data);
-        return data;
-      } catch (err) {
-        return err;
-      }
-    };
-
-    getServiceList(user.id).then((result) => {
-      setServiceList(result);
-    });
-  }, [user.id]);
+  const fetchMySub = useCallback( async() => {
+    try {
+      const { data } = await api.get("/subscribe/cansub", {
+        params : { id: user.id }
+      });
+      setServiceList(data);
+    } catch(err) {
+      console.log(err);
+    }
+  }, [user]);
+  
+  useEffect(() => { fetchMySub(); }, [fetchMySub]);
 
   return (
     <>
-      <BackHeader text="Sub 타기"></BackHeader>
+      <BackHeader text="Sub 타기" />
       <SubPage>
         <div className="title">
           <p>지인과 함께 구독료를 아껴보세요</p>
@@ -63,6 +58,7 @@ function Sub({ user }) {
               key={item.serviceId}
               serviceId={item.serviceId}
               serviceName={item.serviceName}
+              logo={item.logo}
               handleClick={() => goMakeGroup(item)}
               description={"썹타러 가기"}
             />

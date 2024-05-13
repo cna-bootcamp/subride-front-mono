@@ -1,12 +1,13 @@
-import Box from "@mui/material/Box";
+import React from "react";
+import { Box, Button } from "@mui/material";
+import { useNavigate, useLocation } from "react-router-dom";
+import CopyToClipboard from "react-copy-to-clipboard";
 import successMakeRoom from "../assets/successMakeRoom.png";
 import CommonButton from "../common/commonButton";
-import CopyToClipboard from "react-copy-to-clipboard";
-import Button from "@mui/material/Button";
-import { useNavigate } from "react-router-dom";
 
-function SuccessRoom() {
-  const welcomeCode = localStorage.getItem("invitationCode");
+const SuccessRoom = () => {
+  const { state } = useLocation();
+  const welcomeCode = state ? state.invitationCode : null;
   const navigate = useNavigate();
 
   return (
@@ -17,15 +18,14 @@ function SuccessRoom() {
           flexDirection: "column",
           justifyContent: "center",
           mt: "100px",
+          alignItems: "center",
         }}
       >
         <Box
           sx={{
-            width: "100%",
-            textAlign: "center",
             fontSize: "26px",
             color: "#999999",
-            // mb: "40px",
+            mb: "40px",
           }}
         >
           방이 생성 됐어요
@@ -34,76 +34,62 @@ function SuccessRoom() {
           component="img"
           sx={{
             height: 200,
-            display: "block",
-            margin: "50px",
+            mb: "50px",
           }}
           alt="Success Make Room!"
           src={successMakeRoom}
-        ></Box>
+        />
       </Box>
 
-      <div style={{ margin: "10px", fontSize: "20px" }}>초대 코드</div>
-
-      <div>
-        <CopyToClipboard
-          text={welcomeCode}
-          onCopy={() => alert("주소가 복사되었습니다")}
+      <Box sx={{ mx: "10px", fontSize: "20px", mb: "10px" }}>초대 코드</Box>
+      <CopyToClipboard
+        text={welcomeCode}
+        onCopy={() => alert("주소가 복사되었습니다")}
+      >
+        <Box
+          sx={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "space-between",
+            height: 80,
+            mx: "10px",
+            mb: "50px",
+            borderRadius: 5,
+            backgroundColor: "#F6F7FA",
+            px: 3,
+          }}
         >
           <Box
             sx={{
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              height: 80,
-              // width: "90%",
-              mb: "50px",
-              borderRadius: 5,
-              backgroundColor: "#F6F7FA",
+              borderBottom: 1,
+              borderColor: "#AE9C76",
+              fontSize: "20px",
+              color: "#767676",
             }}
           >
-            <Box
-              sx={{
-                textAlign: "center",
-                mr: 3,
-                borderBottom: 1,
-                borderColor: "#AE9C76",
-                fontSize: "20px",
-                color: "#767676",
-              }}
-            >
-              {welcomeCode}
-            </Box>
-
-            <div className="URL">
-              <Button
-                sx={{
-                  // width: "70px",
-                  height: "50px",
-                  backgroundColor: "#F8A809",
-                  color: "#000000",
-                  borderRadius: 5,
-                  fontSize: "18px",
-                  "&:hover": {
-                    backgroundColor: "#F8A809",
-                    boxShadow: "none",
-                  },
-                }}
-                variant="contained"
-                className="URL"
-              >
-                복사
-              </Button>
-            </div>
+            {welcomeCode}
           </Box>
-        </CopyToClipboard>
-      </div>
+          <Button
+            sx={{
+              backgroundColor: "#F8A809",
+              color: "#000000",
+              borderRadius: 5,
+              fontSize: "18px",
+              "&:hover": {
+                backgroundColor: "#F8A809",
+                boxShadow: "none",
+              },
+            }}
+            variant="contained"
+          >
+            복사
+          </Button>
+        </Box>
+      </CopyToClipboard>
 
-      <CommonButton
-        text="확인"
-        handleClick={() => navigate("/")}
-      ></CommonButton>
+      <CommonButton text="확인" handleClick={() => navigate("/")} />
     </>
   );
-}
+};
 
 export default SuccessRoom;

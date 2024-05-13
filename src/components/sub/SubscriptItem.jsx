@@ -8,15 +8,13 @@ function SubscriptItem({ item, index }) {
     <ListItem sx={{ padding: "10px 0px" }}>
       <ListItemAvatar>
         <Avatar
-          src={process.env.PUBLIC_URL + `/service/${item.serviceId}.png`}
+          src={process.env.PUBLIC_URL + `/service/${item.logo}`}
           alt={item.serviceName}
         />
       </ListItemAvatar>
       <ListItemText
         primary={item.serviceName}
-        secondary={`매월 ${index + 1}일 - ${item.fee.toLocaleString(
-          "ko-KR"
-        )}원`}
+        secondary={`${item.fee.toLocaleString("ko-KR")}원(최대 ${item.maxUser}명)`}
         primaryTypographyProps={{ fontSize: "15px" }}
       />
     </ListItem>

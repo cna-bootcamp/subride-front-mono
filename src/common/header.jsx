@@ -1,6 +1,8 @@
 import Box from "@mui/material/Box";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { Link } from "react-router-dom";
+import { IconButton } from "@mui/material";
+import { Logout } from "@mui/icons-material";
 
 const theme = createTheme({
   palette: {
@@ -11,7 +13,7 @@ const theme = createTheme({
   },
 });
 
-function Header() {
+function Header({ handleLogout }) {
   return (
     <>
       <ThemeProvider theme={theme}>
@@ -21,6 +23,10 @@ function Header() {
             fontSize: 30,
             fontWeight: 700,
             borderBottom: "solid 1px #F6F7FA",
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "center",
+            padding: "0 1rem",
           }}
         >
           <Link to="/" style={{ textDecoration: "none", color: "#0E131A" }}>
@@ -30,6 +36,9 @@ function Header() {
               alt="로고"
             ></img>
           </Link>
+          <IconButton onClick={handleLogout}>
+            <Logout />
+          </IconButton>
         </Box>
       </ThemeProvider>
     </>
