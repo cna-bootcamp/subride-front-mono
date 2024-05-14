@@ -1,9 +1,9 @@
 import styled from "@emotion/styled";
-import SubListItem from "../components/sub/SubListItem";
 import { useNavigate } from "react-router-dom";
 import { useCallback, useEffect, useState } from "react";
-import api from "../utils/apiInstance";
-import BackHeader from "../common/backHeader";
+import SubListItem from "pages/SubGroup/components/SubListItem";
+import api from "utils/apiInstance";
+import BackHeader from "components/BackHeader";
 
 const SubPage = styled.div`
   p {
@@ -22,7 +22,7 @@ const SubPage = styled.div`
   }
 `;
 
-function Sub({ user }) {
+function SubGroupCandidate({ user }) {
   const [serviceList, setServiceList] = useState([]);
   const navigate = useNavigate();
 
@@ -69,4 +69,4 @@ function Sub({ user }) {
   );
 }
 
-export default Sub;
+export default SubGroupCandidate;

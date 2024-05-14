@@ -2,17 +2,17 @@ import TextField from "@mui/material/TextField";
 import Autocomplete from "@mui/material/Autocomplete";
 import Stack from "@mui/material/Stack";
 import Box from "@mui/material/Box";
-import CommonButton from "../common/commonButton";
-import Navigation from "../common/navigation";
 import { useCallback, useEffect, useState } from "react";
-import api from "../utils/apiInstance";
 import { useNavigate } from "react-router-dom";
-import BackHeader from "../common/backHeader";
 import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
 import { useLocation } from "react-router";
+import CommonButton from "components/CommonButton";
+import Navigation from "components/Navigation";
+import BackHeader from "components/BackHeader";
+import api from "utils/apiInstance";
 
 const payDateOptions = Array.from({ length: 31 }, (_, i) => i + 1);
 
@@ -142,7 +142,7 @@ function MakeGroup({ user }) {
                 <img
                   loading="lazy"
                   width="20"
-                  src={`./service/${option.logo}`}
+                  src={`/service/${option.logo}`}
                   alt="서비스 로고"
                   style={{ marginRight: "10px" }}
                 />

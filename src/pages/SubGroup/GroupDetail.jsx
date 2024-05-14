@@ -1,9 +1,7 @@
 import styled from "@emotion/styled";
-import BackHeader from "../common/backHeader";
 import ExpandLessIcon from "@mui/icons-material/ExpandLess";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import { useEffect, useState, useCallback } from "react";
-import api from "../utils/apiInstance";
 import { useLocation } from "react-router";
 import Button from "@mui/material/Button";
 import Dialog from "@mui/material/Dialog";
@@ -11,6 +9,8 @@ import DialogContent from "@mui/material/DialogContent";
 import DialogActions from "@mui/material/DialogActions";
 import CloseIcon from "@mui/icons-material/Close"; // CloseIcon 추가
 import { toast } from 'react-toastify';
+import BackHeader from "components/BackHeader";
+import api from "utils/apiInstance";
 
 const ImgContainer = styled.div`
   display: flex;
@@ -460,7 +460,7 @@ function GroupDetail() {
               </div>
               <img
                 style={{ paddingLeft: "10px", width: "auto", height: "20px" }}
-                src={`/KB로고.png`}
+                src={`/logo/KB로고.png`}
                 alt="kb로고"
               />
             </div>

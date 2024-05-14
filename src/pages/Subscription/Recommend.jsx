@@ -1,11 +1,11 @@
 import { useState, useEffect, useCallback } from "react";
-import api from "../utils/apiInstance";
 import styled from "@emotion/styled";
 import { useLocation } from "react-router-dom";
 import { Grid, Typography, Button, Card, CardContent, CardMedia } from '@mui/material';
-import Navigation from "../common/navigation";
-import BackHeader from "../common/backHeader";
 import { useNavigate } from 'react-router-dom';
+import Navigation from "components/Navigation";
+import BackHeader from "components/BackHeader";
+import api from "utils/apiInstance";
 
 const RecommendPage = styled.div`
   color: #4a4646;

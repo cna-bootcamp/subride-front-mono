@@ -4,10 +4,10 @@ import styled from "@emotion/styled";
 import { Button } from "@mui/material";
 import GroupAddIcon from "@mui/icons-material/GroupAdd";
 import KeyIcon from "@mui/icons-material/Key";
-import api from "../utils/apiInstance";
-import Navigation from "../common/navigation";
-import BackHeader from "../common/backHeader";
-import SubListItem from "../components/sub/SubListItem";
+import api from "utils/apiInstance";
+import Navigation from "components/Navigation";
+import BackHeader from "components/BackHeader";
+import SubListItem from "pages/SubGroup/components/SubListItem";
 
 const SubPage = styled.div`
   p {
@@ -41,7 +41,7 @@ const ModalContent = styled.div`
   }
 `;
 
-function MySub({ user }) {
+function MySubGroup({ user }) {
   const navigate = useNavigate();
   const [subGroupList, setSubGroupList] = useState([]);
 
@@ -109,4 +109,4 @@ function MySub({ user }) {
   );
 }
 
-export default MySub;
+export default MySubGroup;

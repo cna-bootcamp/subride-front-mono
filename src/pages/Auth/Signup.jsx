@@ -11,7 +11,7 @@ import { Visibility, VisibilityOff } from "@mui/icons-material";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import api from "../utils/apiInstance"; // apiInstance 임포트
+import api from "utils/apiInstance"; // apiInstance 임포트
 
 const generateRandomAccountNumber = () => {
   const bankCode = Math.floor(Math.random() * (999 - 100 + 1)) + 100;

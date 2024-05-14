@@ -2,8 +2,8 @@ import React from "react";
 import { Box, Button } from "@mui/material";
 import { useNavigate, useLocation } from "react-router-dom";
 import CopyToClipboard from "react-copy-to-clipboard";
-import successMakeRoom from "../assets/successMakeRoom.png";
-import CommonButton from "../common/commonButton";
+import successMakeRoom from "assets/successMakeRoom.png";
+import CommonButton from "components/CommonButton";
 
 const SuccessRoom = () => {
   const { state } = useLocation();

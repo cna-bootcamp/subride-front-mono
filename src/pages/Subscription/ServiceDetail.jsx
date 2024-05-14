@@ -1,11 +1,11 @@
 import { useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
-import api from '../utils/apiInstance';
-import BackHeader from '../common/backHeader';
 import styled from '@emotion/styled';
 import { Button } from '@mui/material';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import api from 'utils/apiInstance';
+import BackHeader from 'components/BackHeader';
 
 const ServiceDetailContainer = styled.div`
   margin: 30px;

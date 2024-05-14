@@ -9,7 +9,7 @@ import { memo } from "react";
 
 const path = {
   "/": 0,
-  "/mysub": 1,
+  "/mysubgroup": 1,
   "/recommend": 2,
   "/mysubscription": 3,
 };
@@ -45,7 +45,7 @@ function Navigation() {
       <BottomNavigationAction
         label="Sub"
         component={Link}
-        to="/mysub"
+        to="/mysubgroup"
         icon={<GroupsIcon />}
       />
       <BottomNavigationAction

@@ -1,13 +1,13 @@
 import React, { useEffect, useState, useCallback } from "react";
 import styled from "@emotion/styled";
-import api from "../utils/apiInstance";
 import List from "@mui/material/List";
 import AddIcon from "@mui/icons-material/Add";
-import SubscriptItem from "../components/sub/SubscriptItem";
-import Navigation from "../common/navigation";
-import BackHeader from "../common/backHeader";
+import SubscriptItem from "pages/Subscription/components/SubscriptItem";
+import Navigation from "components/Navigation";
+import BackHeader from "components/BackHeader";
 import { useNavigate } from "react-router-dom";
 import { Button } from "@mui/material";
+import api from "utils/apiInstance";
 
 const MySubscriptionPage = styled.div`
   p {

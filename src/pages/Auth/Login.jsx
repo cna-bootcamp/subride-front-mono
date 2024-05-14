@@ -2,7 +2,7 @@ import { useState, useRef } from "react";
 import { TextField, Button } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
-import api from "../utils/apiInstance";
+import api from "utils/apiInstance";
 import { jwtDecode } from "jwt-decode";
 
 const login = async (userId, password) => {
@@ -90,7 +90,7 @@ function Login({ handleAfterLogin }) {
   return (
     <>
       <div style={{ paddingTop: "100px", paddingBottom: "50px", textAlign: "center" }}>
-        <img style={{ height: "200px", objectFit: "cover" }} src="./로고1.png" alt="로고" />
+        <img style={{ height: "200px", objectFit: "cover" }} src="/logo/로고1.png" alt="로고" />
       </div>
       <p style={{ fontSize: "20px", marginBottom: "10px" }}>ID와 암호를 입력하세요.</p>
       <p style={{ fontSize: "14px", marginBottom: "30px" }}>처음이신 분은 ID와 암호 입력 후 [Sign Up]을 누르세요</p>

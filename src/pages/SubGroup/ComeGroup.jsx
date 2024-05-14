@@ -6,10 +6,10 @@ import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogTitle from "@mui/material/DialogTitle";
 import Button from "@mui/material/Button";
-import comeGroupImg from "../assets/comeGroup.png";
-import CommonButton from "../common/commonButton";
-import api from "../utils/apiInstance";
-import BackHeader from "../common/backHeader";
+import comeGroupImg from "assets/comeGroup.png";
+import CommonButton from "components/CommonButton";
+import api from "utils/apiInstance";
+import BackHeader from "components/BackHeader";
 
 const ImgAndTextContainer = styled.div`
   margin: 100px 40px 20px 30px;
