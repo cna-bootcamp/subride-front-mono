@@ -80,7 +80,7 @@ function MySubGroup({ user }) {
             <Button sx={{ width: "100%", color: "#4A4646" }} onClick={() => navigate("/subgroup/makegroup")}>
               <GroupAddIcon />썹 만들기
             </Button>
-            <Button sx={{ width: "100%", color: "#4A4646" }} onClick={() => navigate("/subgroup/comegroup")}>
+            <Button sx={{ width: "100%", color: "#4A4646" }} onClick={() => navigate("/subgroup/joingroup")}>
               <KeyIcon sx={{ marginRight: "10px" }} />썹 참여하기
             </Button>
           </div>

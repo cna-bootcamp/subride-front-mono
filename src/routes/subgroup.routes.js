@@ -5,7 +5,7 @@ import SubGroupCandidate from "pages/SubGroup/SubGroupCandidate";
 import MySubGroup from "pages/SubGroup/MySubGroup";
 import GroupDetail from "pages/SubGroup/GroupDetail";
 import MakeGroup from "pages/SubGroup/MakeGroup";
-import ComeGroup from "pages/SubGroup/ComeGroup";
+import JoinGroup from "pages/SubGroup/JoinGroup";
 import SuccessRoom from "pages/SubGroup/SuccessRoom";
 
 const SubGroupRoutes = ({ user }) => {
@@ -15,7 +15,7 @@ const SubGroupRoutes = ({ user }) => {
       <Route path="/mysubgroup" element={<MySubGroup user={user} />} />
       <Route path="/makegroup" element={<MakeGroup user={user} />} />
       <Route path="/success-room" element={<SuccessRoom />} />
-      <Route path="/comegroup" element={<ComeGroup />} />
+      <Route path="/joingroup" element={<JoinGroup />} />
       <Route path="/groupdetail" element={<GroupDetail user={user} />} />
     </Routes>
   );

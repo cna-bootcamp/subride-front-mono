@@ -6,6 +6,7 @@ import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogTitle from "@mui/material/DialogTitle";
 import Button from "@mui/material/Button";
+import { toast } from "react-toastify";
 import comeGroupImg from "assets/comeGroup.png";
 import CommonButton from "components/CommonButton";
 import api from "utils/apiInstance";
@@ -50,9 +51,10 @@ const PasswordContainer = styled.div`
   }
 `;
 
-function ComeGroup() {
+function JoinGroup() {
   const [open, setOpen] = useState(false);
   const [alertMessage, setAlertMessage] = useState("");
+  const [isJoining, setIsJoining] = useState(false);
   const navigate = useNavigate();
   const passwordInputRef = useRef(null);
 
@@ -67,10 +69,12 @@ function ComeGroup() {
   const handleClose = () => {
     setOpen(false);
     if (alertMessage === "가입 되었습니다.") {
-      navigate("/");
+      setTimeout(() => {
+        navigate("/");
+      }, 300);
     } else {
       setTimeout(() => {
-        passwordInputRef.current.focus(); // 초대코드 필드에 포커스 설정
+        passwordInputRef.current.focus();
       }, 0);
     }
   };
@@ -86,17 +90,25 @@ function ComeGroup() {
       return;
     }
 
-    const lastData = { id: userData.id, invitationCode: password };
+    setIsJoining(true);
+
+    const lastData = {
+      id: userData.id,
+      invitationCode: password,
+    };
 
     api
       .post("/group/join", lastData)
       .then(() => {
-        setAlertMessage("가입 되었습니다.");
-        handleClickOpen();
+        toast.success("가입 되었습니다.", {
+          autoClose: 300,
+          onClose: () => navigate("/"),
+        });
       })
       .catch((error) => {
         setAlertMessage(error.response.data.message);
         handleClickOpen();
+        setIsJoining(false);
         ps.value = null;
         console.log(error);
       });
@@ -127,15 +139,15 @@ function ComeGroup() {
       </ImgAndTextContainer>
       <PasswordContainer>
         <div className="password-text">초대코드</div>
-        <input 
-          className="input-box" 
-          id="비밀번호" 
-          ref={passwordInputRef}  
+        <input className="input-box" id="비밀번호" ref={passwordInputRef} />
+        <CommonButton
+          text={isJoining ? "참여중..." : "참여하기"}
+          handleClick={handleJoinGroup}
+          disabled={isJoining}
         />
-        <CommonButton text="확인" handleClick={handleJoinGroup} />
       </PasswordContainer>
     </>
   );
 }
 
-export default ComeGroup;
+export default JoinGroup;

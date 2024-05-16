@@ -63,7 +63,7 @@ function SubGroupCandidate({ user }) {
   }, [fetchMySub]);
 
   const handleJoinButtonClick = () => {
-    navigate("/subgroup/comegroup");
+    navigate("/subgroup/joingroup");
   };
 
   return (

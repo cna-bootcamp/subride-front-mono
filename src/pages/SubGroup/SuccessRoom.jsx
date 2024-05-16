@@ -2,6 +2,7 @@ import React from "react";
 import { Box, Button } from "@mui/material";
 import { useNavigate, useLocation } from "react-router-dom";
 import CopyToClipboard from "react-copy-to-clipboard";
+import { toast } from "react-toastify";
 import successMakeRoom from "assets/successMakeRoom.png";
 import CommonButton from "components/CommonButton";
 
@@ -9,6 +10,18 @@ const SuccessRoom = () => {
   const { state } = useLocation();
   const welcomeCode = state ? state.invitationCode : null;
   const navigate = useNavigate();
+
+  const handleCopyCode = () => {
+    toast.success("초대 코드가 복사되었습니다.", {
+      position: "top-right",
+      autoClose: 300,
+      hideProgressBar: true,
+      closeOnClick: true,
+      pauseOnHover: false,
+      draggable: false,
+      progress: undefined,
+    });
+  };
 
   return (
     <>
@@ -21,31 +34,13 @@ const SuccessRoom = () => {
           alignItems: "center",
         }}
       >
-        <Box
-          sx={{
-            fontSize: "26px",
-            color: "#999999",
-            mb: "40px",
-          }}
-        >
+        <Box sx={{ fontSize: "26px", color: "#999999", mb: "40px" }}>
           썹이 만들어 졌어요!
         </Box>
-        <Box
-          component="img"
-          sx={{
-            height: 200,
-            mb: "50px",
-          }}
-          alt="Success Make Room!"
-          src={successMakeRoom}
-        />
+        <Box component="img" sx={{ height: 200, mb: "50px" }} alt="Success Make Room!" src={successMakeRoom} />
       </Box>
-
       <Box sx={{ mx: "10px", fontSize: "20px", mb: "10px" }}>초대 코드</Box>
-      <CopyToClipboard
-        text={welcomeCode}
-        onCopy={() => alert("주소가 복사되었습니다")}
-      >
+      <CopyToClipboard text={welcomeCode} onCopy={handleCopyCode}>
         <Box
           sx={{
             display: "flex",
@@ -86,8 +81,7 @@ const SuccessRoom = () => {
           </Button>
         </Box>
       </CopyToClipboard>
-
-      <CommonButton text="확인" handleClick={() => navigate("/")} />
+      <CommonButton text="홈으로 이동" handleClick={() => navigate("/")} />
     </>
   );
 };
