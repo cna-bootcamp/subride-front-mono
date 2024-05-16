@@ -63,7 +63,7 @@ function MySubGroup({ user }) {
   }, [user.id, getSubGroupList]);
 
   const handleGroupDetail = (groupId) => {
-    navigate("/groupdetail", { state: { groupId: groupId } });
+    navigate("/subgroup/groupdetail", { state: { groupId: groupId } });
   };
 
   return (
@@ -77,10 +77,10 @@ function MySubGroup({ user }) {
         </div>
         <ModalContent>
           <div className="button-box">
-            <Button sx={{ width: "100%", color: "#4A4646" }} onClick={() => navigate("/makegroup")}>
+            <Button sx={{ width: "100%", color: "#4A4646" }} onClick={() => navigate("/subgroup/makegroup")}>
               <GroupAddIcon />썹 만들기
             </Button>
-            <Button sx={{ width: "100%", color: "#4A4646" }} onClick={() => navigate("/comegroup")}>
+            <Button sx={{ width: "100%", color: "#4A4646" }} onClick={() => navigate("/subgroup/comegroup")}>
               <KeyIcon sx={{ marginRight: "10px" }} />썹 참여하기
             </Button>
           </div>

@@ -3,9 +3,13 @@ import { useState, useEffect, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import api from 'utils/apiInstance';
 
+const tokenRequestInterval = process.env.TOKEN_REQUEST_INTERVAL || 30 * 60 * 1000;
+const idleTime = process.env.IDLE_TIME || 10 * 60 * 1000;
+
 const useAuthCheck = () => {
   const [isTokenVerified, setIsTokenVerified] = useState(false);
   const navigate = useNavigate();
+  const [lastActiveTime, setLastActiveTime] = useState(null);
 
   const fetchVerifyToken = useCallback(async () => {
     const token = sessionStorage.getItem("accessToken");
@@ -47,7 +51,8 @@ const useAuthCheck = () => {
         navigate("/login");
       }
     } else {
-      setIsTokenVerified(false);
+      setIsTokenVerified(true);
+      navigate("/login");
     }
   }, [navigate]);
 
@@ -55,12 +60,43 @@ const useAuthCheck = () => {
     fetchVerifyToken();
   }, [fetchVerifyToken]);
 
+  
   useEffect(() => {
-    const interval = setInterval(() => {
-      fetchVerifyToken();
-    }, 60000); // 10분마다 토큰 유효성 검사
+    const handleUserActivity = () => {
+      setLastActiveTime(new Date());
+    };
+  
+    window.addEventListener('mousemove', handleUserActivity);
+    window.addEventListener('keydown', handleUserActivity);
+  
+    return () => {
+      window.removeEventListener('mousemove', handleUserActivity);
+      window.removeEventListener('keydown', handleUserActivity);
+    };
+  }, []);
+
+  useEffect(() => {
+    const interval = setInterval(async () => {
+      // 마지막 활동 시간 확인
+      if (lastActiveTime) {
+        const timeSinceLastActivity = new Date() - lastActiveTime;
+
+        if (timeSinceLastActivity > idleTime) {
+          console.log("30분 이상 비활동 상태, 로그아웃");
+          sessionStorage.removeItem("accessToken");
+          sessionStorage.removeItem("refreshToken");
+          setIsTokenVerified(false);
+          navigate("/login");
+          return;
+        }
+      }
+
+      // 토큰 갱신 요청
+      await fetchVerifyToken();
+    }, tokenRequestInterval); // 10분마다 토큰 유효성 검사
+
     return () => clearInterval(interval);
-  }, [fetchVerifyToken]);
+  }, [fetchVerifyToken, lastActiveTime, navigate]);
 
   return isTokenVerified;
 };

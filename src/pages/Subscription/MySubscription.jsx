@@ -108,7 +108,7 @@ function MySubscription({ user }) {
     (item) => {
       const { serviceId, serviceName, logo, description } = item;
       const ele = { serviceId, serviceName, logo, description };
-      navigate("/makeGroup", { state: ele });
+      navigate("/subgroup/makegroup", { state: ele });
     },
     [navigate]
   );
@@ -120,7 +120,7 @@ function MySubscription({ user }) {
 
   const handleServiceClick = useCallback(
     (serviceId) => {
-      navigate(`/service/${serviceId}`, { state: { serviceId: serviceId, alreadyEnroll: true } });
+      navigate(`/subscription/service/${serviceId}`, { state: { serviceId: serviceId, alreadyEnroll: true } });
     },
     [navigate]
   );
@@ -170,7 +170,7 @@ function MySubscription({ user }) {
         </List>
         <button
           className="add-button"
-          onClick={() => navigate("/recommend", { state: { defaultCategory: 1 } })}
+          onClick={() => navigate("/subscription/recommend", { state: { defaultCategory: 1 } })}
         >
           <AddIcon sx={{ fontSize: "1rem", marginRight: "1rem" }} />
           <p>추가하기</p>

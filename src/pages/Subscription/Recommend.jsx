@@ -72,7 +72,7 @@ function Recommend({ user }) {
   }, []);
 
   const handleServiceClick = useCallback((serviceId) => {
-    navigate(`/service/${serviceId}`, { state: { serviceId: serviceId, alreadyEnroll:false } });
+    navigate(`/subscription/service/${serviceId}`, { state: { serviceId: serviceId, alreadyEnroll:false } });
   }, [navigate]);
 
   const fetchCategories = useCallback(async () => {

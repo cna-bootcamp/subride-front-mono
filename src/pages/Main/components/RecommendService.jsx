@@ -85,7 +85,7 @@ function RecommendService({ navigate }) {
         <p>지난 한 달 당신은 살림왕👑</p>
         <button
           className="bottom"
-          onClick={() => navigate("/recommend", { state: { defaultCategory: 1 } })}
+          onClick={() => navigate("/subscription/recommend", { state: { defaultCategory: 1 } })}
         >
           <p>지출 내역 기반으로 구독 서비스를 추천해드려요</p>
           <ArrowForwardIos fontSize="small" />

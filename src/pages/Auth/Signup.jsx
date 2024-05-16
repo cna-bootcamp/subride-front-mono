@@ -140,7 +140,7 @@ const Signup = () => {
       <form onSubmit={handleSubmit}>
         <TextField
           label="사용자 ID"
-          value={userId}
+          value=""
           onChange={(e) => setUserId(e.target.value)}
           error={!!errors.userId}
           helperText={errors.userId}
@@ -151,7 +151,7 @@ const Signup = () => {
         <TextField
           label="암호"
           type={showPassword ? "text" : "password"}
-          value={password}
+          value=""
           onChange={(e) => setPassword(e.target.value)}
           error={!!errors.password}
           helperText={errors.password}

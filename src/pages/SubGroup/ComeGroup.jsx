@@ -118,7 +118,7 @@ function ComeGroup() {
           </Button>
         </DialogActions>
       </Dialog>
-      <BackHeader text="그룹 참가하기" />
+      <BackHeader text="썹 참여하기" />
       <ImgAndTextContainer>
         <div className="welcome-text">환영합니다</div>
         <div className="detail-text">초대코드를 입력하고,</div>

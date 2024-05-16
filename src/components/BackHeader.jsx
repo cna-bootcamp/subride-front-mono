@@ -9,7 +9,7 @@ function BackHeader(props) {
 
   const pagebackClick = () => {
     const from = location.state?.from;
-    if (from && from.startsWith("/service/")) {
+    if (from && from.startsWith("/subscription/service/")) {
       navigate("/");
     } else {
       navigate(-1);

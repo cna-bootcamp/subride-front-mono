@@ -28,7 +28,7 @@ const SuccessRoom = () => {
             mb: "40px",
           }}
         >
-          방이 생성 됐어요
+          썹이 만들어 졌어요!
         </Box>
         <Box
           component="img"

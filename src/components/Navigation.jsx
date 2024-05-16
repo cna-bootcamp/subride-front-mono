@@ -9,9 +9,9 @@ import { memo } from "react";
 
 const path = {
   "/": 0,
-  "/mysubgroup": 1,
-  "/recommend": 2,
-  "/mysubscription": 3,
+  "/subgroup/mysubgroup": 1,
+  "/subscription/recommend": 2,
+  "/subscription/mysubscription": 3,
 };
 
 function Navigation() {
@@ -45,19 +45,19 @@ function Navigation() {
       <BottomNavigationAction
         label="Sub"
         component={Link}
-        to="/mysubgroup"
+        to="/subgroup/mysubgroup"
         icon={<GroupsIcon />}
       />
       <BottomNavigationAction
         label="추천"
         component={Link}
-        to="/recommend"
+        to="/subscription/recommend"
         icon={<RecommendIcon />}
       />
       <BottomNavigationAction
         label="구독현황"
         component={Link}
-        to="/mysubscription"
+        to="/subscription/mysubscription"
         icon={<BookmarksIcon />}
       />
     </BottomNavigation>

@@ -118,7 +118,7 @@ function ServiceDetail({ user }) {
       const { data } = await api.post('/subscribe/enroll', requestBody);
       toast.success(data.message, {
         onClose: () =>
-          navigate('/mysubscription', { state: { from: '/service/' + serviceId } }),
+          navigate('/subscription/mysubscription', { state: { from: '/subscription/service/' + serviceId } }),
         
         position: 'top-center',
         autoClose: 300, //  자동으로 사라짐

@@ -2,7 +2,7 @@ import TextField from "@mui/material/TextField";
 import Autocomplete from "@mui/material/Autocomplete";
 import Stack from "@mui/material/Stack";
 import Box from "@mui/material/Box";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useState, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
@@ -31,6 +31,8 @@ function MakeGroup({ user }) {
   const navigate = useNavigate();
   const [serviceOptions, setServiceOptions] = useState([]);
 
+  const groupNameInputRef = useRef(null);
+  
   const fetchServices = useCallback(async () => {
     try { 
       if(!isFixedService) {
@@ -46,6 +48,10 @@ function MakeGroup({ user }) {
 
   useEffect(() => {
     fetchServices();
+  
+    if (groupNameInputRef.current) {
+      groupNameInputRef.current.focus();
+    }
   }, [fetchServices]);
 
   const createGroup = () => {
@@ -63,7 +69,7 @@ function MakeGroup({ user }) {
         .post("/group/create", groupData)
         .then((response) => {
           //window.localStorage.setItem("invitationCode", response.data.invitationCode);
-          navigate("/successRoom", {state: { invitationCode: response.data.invitationCode }});
+          navigate("/subgroup/success-room", {state: { invitationCode: response.data.invitationCode }});
         })
         .catch((error) => {
           console.error(error);
@@ -106,7 +112,7 @@ function MakeGroup({ user }) {
 
   return (
     <>
-      <BackHeader text="그룹 만들기" />
+      <BackHeader text="썹 만들기" />
 
       <Box
         sx={{
@@ -122,13 +128,14 @@ function MakeGroup({ user }) {
         <Stack spacing={4}>
           <TextField
             id="groupName"
-            label="그룹 이름"
+            label="썹 이름"
             variant="standard"
             value={groupName}
-            onChange={(e) => setGroupName(e.target.value)}
+            onChange={(e) => setGroupName(e.target.value.slice(0, 100))}
             onFocus={handleInputFocus}
             error={groupNameError}
-            helperText={groupNameError ? "그룹 이름을 입력해주세요." : ""}
+            helperText={groupNameError ? "썹 이름을 입력해주세요." : `${groupName.length}/100`}
+            inputRef={groupNameInputRef}
           />
 
           <Autocomplete
@@ -198,7 +205,7 @@ function MakeGroup({ user }) {
           </FormControl>
         </Stack>
       </Box>
-      <CommonButton text="방 만들기" handleClick={createGroup} />
+      <CommonButton text="썹 만들기" handleClick={createGroup} />
       <Navigation />
     </>
   );

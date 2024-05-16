@@ -68,11 +68,11 @@ const SubscriptionListContainer = styled.div`
 
 function SubscriptionList({ subscriptionList, userName, navigate }) {
   const handleNavigateToMySubscription = () => {
-    navigate("/mysubscription");
+    navigate("/subscription/mysubscription");
   };
 
   const handleServiceClick = (serviceId) => {
-    navigate(`/service/${serviceId}`, {
+    navigate(`/subscription/service/${serviceId}`, {
       state: { serviceId: serviceId, alreadyEnroll: true },
     });
   };

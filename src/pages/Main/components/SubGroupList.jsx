@@ -68,11 +68,11 @@ const SubGroupListContainer = styled.div`
 
 function SubGroupList({ subGroupList, userName, navigate }) {
   const handleNavigateToMySub = () => {
-    navigate("/mysubgroup");
+    navigate("/subgroup/mysubgroup");
   };
 
   const handleGroupClick = (groupId) => {
-    navigate("/groupdetail", { state: { groupId: groupId } });
+    navigate("/subgroup/groupdetail", { state: { groupId: groupId } });
   };
 
   return (
