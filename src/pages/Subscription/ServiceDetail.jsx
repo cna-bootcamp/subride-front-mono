@@ -6,6 +6,7 @@ import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import api from 'utils/apiInstance';
 import BackHeader from 'components/BackHeader';
+import Navigation from "components/Navigation";
 
 const ServiceDetailContainer = styled.div`
   margin: 30px;
@@ -93,9 +94,7 @@ function ServiceDetail({ user }) {
   useEffect(() => {
     const fetchService = async () => {
       try {
-        const { data } = await api.get(`/subscribe/detail`, {
-          params: { id: serviceId },
-        });
+        const { data } = await api.get("/subscriptions/"+serviceId);
         setService(data);
       } catch (err) {
         console.error(err);
@@ -115,7 +114,7 @@ function ServiceDetail({ user }) {
         subscribeId: service.serviceId,
         billingDate: 5, // 예시로 5일로 설정
       };
-      const { data } = await api.post('/subscribe/enroll', requestBody);
+      const { data } = await api.post('/subscriptions/members', requestBody);
       toast.success(data.message, {
         onClose: () =>
           navigate('/subscription/mysubscription', { state: { from: '/subscription/service/' + serviceId } }),
@@ -152,13 +151,14 @@ function ServiceDetail({ user }) {
           <FeeLabel>금액:</FeeLabel>
           <FeeAmount>{service.fee.toLocaleString('ko-KR')}원</FeeAmount>
         </FeeContainer>
-        <MaxUser>최대 {service.maxUser}명 참여 가능</MaxUser>
+        <MaxUser>최대 {service.maxUser}명 공유 가능</MaxUser>
         {!alreadyEnroll && (
           <SubscribeButton onClick={handleSubscribe} disabled={isLoading}>
             {isLoading ? '구독 중...' : '구독하기'}
           </SubscribeButton>
         )}
       </ServiceDetailContainer>
+      <Navigation />
     </>
   );
 }

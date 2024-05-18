@@ -4,6 +4,7 @@ import { useCallback, useEffect, useState } from "react";
 import SubListItem from "pages/SubGroup/components/SubListItem";
 import api from "utils/apiInstance";
 import BackHeader from "components/BackHeader";
+import Navigation from "components/Navigation";
 
 const SubPage = styled.div`
   p {
@@ -49,8 +50,8 @@ function SubGroupCandidate({ user }) {
 
   const fetchMySub = useCallback(async () => {
     try {
-      const { data } = await api.get("/subscribe/cansub", {
-        params: { id: user.id },
+      const { data } = await api.get("/subscriptions/sub-candidates", {
+        params: { userId: user.id },
       });
       setServiceList(data);
     } catch (err) {
@@ -95,6 +96,7 @@ function SubGroupCandidate({ user }) {
           ))}
         </ul>
       </SubPage>
+      <Navigation />
     </>
   );
 }

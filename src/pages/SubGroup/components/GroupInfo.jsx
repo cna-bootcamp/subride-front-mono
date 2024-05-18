@@ -8,7 +8,7 @@ const ImgContainer = styled.div`
   align-items: center;
   justify-content: center;
   width: 100dvw;
-  height: 356px;
+  height: 396px;
   background-color: #fed337;
   position: absolute;
   left: 0px;
@@ -25,7 +25,7 @@ const ImgContainer = styled.div`
   }
 
   .informContainer {
-    margin-top: 70px;
+    margin-top: 120px;
     background-color: #ffffff;
     width: 323px;
     height: 160px;
@@ -37,10 +37,21 @@ const ImgContainer = styled.div`
     padding: 10px;
   }
 
-  .serviceName {
-    font-size: 24px;
+  .groupName {
+    font-size: 20px;
     font-weight: bold;
-    margin-top: 40px;
+    margin-top: 10px;
+    font-family: "KBFGTextM";
+    text-align: center;
+    max-width: 80%; /* 또는 원하는 최대 너비 값 */
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .serviceName {
+    font-size: 14px;
+    font-weight: normal;
     font-family: "KBFGTextM";
     text-align: center;
   }
@@ -120,6 +131,9 @@ const GroupInfo = ({ serviceData }) => {
               src={`/service/${serviceData.subscribeDTO.logo}`}
               alt="로고1"
             />
+            <div className="groupName">
+              {serviceData.groupName}
+            </div>
             <div className="serviceName">
               {serviceData.subscribeDTO.serviceName}
             </div>

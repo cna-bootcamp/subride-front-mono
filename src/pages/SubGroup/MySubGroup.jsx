@@ -47,8 +47,8 @@ function MySubGroup({ user }) {
 
   const getSubGroupList = useCallback(async (userId) => {
     try {
-      const { data } = await api.get("/group/mylist", {
-        params: { id: userId },
+      const { data } = await api.get("/groups", {
+        params: { userId: userId, include: "subscribe,users" },
       });
       return data;
     } catch (err) {

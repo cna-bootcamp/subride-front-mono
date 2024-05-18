@@ -10,18 +10,22 @@ import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
 import { useLocation } from "react-router";
 import CommonButton from "components/CommonButton";
-import Navigation from "components/Navigation";
 import BackHeader from "components/BackHeader";
 import api from "utils/apiInstance";
 
 const payDateOptions = Array.from({ length: 31 }, (_, i) => i + 1);
+const koreanRegex = /[ㄱ-ㅎㅏ-ㅣ가-힣]/g;
+const nonKoreanRegex = /[^ㄱ-ㅎㅏ-ㅣ가-힣a-zA-Z0-9\s]/g;
+const maxSubLength = 40;
 
 function MakeGroup({ user }) {
-  const { state } = useLocation();  //-- '/sub'에서 넘어온 경우 구독객체 받기 
-  const isFixedService = state && state.serviceId ? true:false;
+  const { state } = useLocation(); //-- '/sub'에서 넘어온 경우 구독객체 받기
+  const isFixedService = state && state.serviceId ? true : false;
   const [groupName, setGroupName] = useState("");
   const [selectedService, setSelectedService] = useState(state || null);
-  const [representativeAccount, setRepresentativeAccount] = useState(user.bankAccount);
+  const [representativeAccount, setRepresentativeAccount] = useState(
+    user.bankAccount
+  );
   const [payDate, setPayDate] = useState(1);
 
   const [groupNameError, setGroupNameError] = useState(false);
@@ -32,12 +36,12 @@ function MakeGroup({ user }) {
   const [serviceOptions, setServiceOptions] = useState([]);
 
   const groupNameInputRef = useRef(null);
-  
+
   const fetchServices = useCallback(async () => {
-    try { 
-      if(!isFixedService) {
-        const { data } = await api.get("/subscribe/cansub", {
-          params: { id: user.id },
+    try {
+      if (!isFixedService) {
+        const { data } = await api.get("/subscriptions/sub-candidates", {
+          params: { userId: user.id },
         });
         setServiceOptions(data);
       }
@@ -48,7 +52,7 @@ function MakeGroup({ user }) {
 
   useEffect(() => {
     fetchServices();
-  
+
     if (groupNameInputRef.current) {
       groupNameInputRef.current.focus();
     }
@@ -66,10 +70,12 @@ function MakeGroup({ user }) {
       };
 
       api
-        .post("/group/create", groupData)
+        .post("/groups", groupData)
         .then((response) => {
           //window.localStorage.setItem("invitationCode", response.data.invitationCode);
-          navigate("/subgroup/success-room", {state: { invitationCode: response.data.invitationCode }});
+          navigate("/subgroup/success-room", {
+            state: { invitationCode: response.data.invitationCode },
+          });
         })
         .catch((error) => {
           console.error(error);
@@ -80,7 +86,7 @@ function MakeGroup({ user }) {
   const validateInputs = () => {
     let isValid = true;
 
-    if (!groupName) {
+    if (!groupName || nonKoreanRegex.test(groupName)) {
       setGroupNameError(true);
       isValid = false;
     } else {
@@ -110,6 +116,22 @@ function MakeGroup({ user }) {
     setAccountError(false);
   };
 
+  const handleGroupNameChange = (event) => {
+    const value = event.target.value;
+    const koreanLength = (value.match(koreanRegex) || []).length;
+    const nonKoreanLength = value.length - koreanLength;
+
+    if (koreanLength + nonKoreanLength <= maxSubLength) {
+      setGroupName(value);
+    }
+  };
+
+  const getGroupNameLength = () => {
+    const koreanLength = (groupName.match(koreanRegex) || []).length;
+    const nonKoreanLength = groupName.length - koreanLength;
+    return koreanLength * 2 + nonKoreanLength;
+  };
+
   return (
     <>
       <BackHeader text="썹 만들기" />
@@ -131,10 +153,14 @@ function MakeGroup({ user }) {
             label="썹 이름"
             variant="standard"
             value={groupName}
-            onChange={(e) => setGroupName(e.target.value.slice(0, 100))}
+            onChange={handleGroupNameChange}
             onFocus={handleInputFocus}
             error={groupNameError}
-            helperText={groupNameError ? "썹 이름을 입력해주세요." : `${groupName.length}/100`}
+            helperText={
+              groupNameError
+                ? "한글, 영문, 숫자만 입력해주세요."
+                : `${getGroupNameLength()}/${maxSubLength}`
+            }
             inputRef={groupNameInputRef}
           />
 
@@ -142,7 +168,7 @@ function MakeGroup({ user }) {
             value={selectedService}
             onChange={(_, newValue) => setSelectedService(newValue)}
             options={isFixedService ? [selectedService] : serviceOptions}
-            disabled = {isFixedService}
+            disabled={isFixedService}
             disableClearable
             renderOption={(props, option) => (
               <Box {...props}>
@@ -169,11 +195,15 @@ function MakeGroup({ user }) {
               />
             )}
             getOptionLabel={(option) => option.serviceName}
-            isOptionEqualToValue={(option, value) => option.serviceId === value.serviceId}
+            isOptionEqualToValue={(option, value) =>
+              option.serviceId === value.serviceId
+            }
           />
 
           <FormControl variant="standard" error={accountError}>
-            <InputLabel id="representative-account-label">대표계좌 선택하기</InputLabel>
+            <InputLabel id="representative-account-label">
+              대표계좌 선택하기
+            </InputLabel>
             <Select
               labelId="representative-account-label"
               id="representative-account-select"
@@ -182,9 +212,15 @@ function MakeGroup({ user }) {
               label="대표계좌 선택하기"
               onFocus={handleInputFocus}
             >
-              <MenuItem value={user.bankAccount}>{user.bankAccount} :마이핏통장</MenuItem>
+              <MenuItem value={user.bankAccount}>
+                {user.bankAccount} :마이핏통장
+              </MenuItem>
             </Select>
-            {accountError && <span style={{ color: "red", fontSize: "0.75rem" }}>대표계좌를 선택해주세요.</span>}
+            {accountError && (
+              <span style={{ color: "red", fontSize: "0.75rem" }}>
+                대표계좌를 선택해주세요.
+              </span>
+            )}
           </FormControl>
 
           <FormControl variant="standard">
@@ -206,7 +242,7 @@ function MakeGroup({ user }) {
         </Stack>
       </Box>
       <CommonButton text="썹 만들기" handleClick={createGroup} />
-      <Navigation />
+      
     </>
   );
 }

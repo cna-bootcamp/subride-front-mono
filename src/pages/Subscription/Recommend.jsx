@@ -48,10 +48,10 @@ const getCategories = async () => {
   }
 };
 
-const getEnrollList = async (userId, categoryId) => {
+const getEnrollList = async (categoryId, userId) => {
   try {
-    const { data } = await api.get("/subscribe/canenroll", {
-      params: { id: userId, category_id: categoryId },
+    const { data } = await api.get("/subscriptions/enroll-subscriptions", {
+      params: { categoryId, userId },
     });
     return data;
   } catch (err) {
@@ -85,9 +85,9 @@ function Recommend({ user }) {
     }
   }, []);
 
-  const fetchEnrollList = useCallback(async (userId, categoryId) => {
+  const fetchEnrollList = useCallback(async (categoryId, userId) => {
     try {
-      const result = await getEnrollList(userId, categoryId);
+      const result = await getEnrollList(categoryId, userId);
       console.log(result);
       setSubscribeList(result);
     } catch (err) {
@@ -97,11 +97,11 @@ function Recommend({ user }) {
 
   useEffect(() => {
     fetchCategories();
-    fetchEnrollList(user.id, defaultCategory);
+    fetchEnrollList(defaultCategory, user.id);
   }, [fetchCategories, fetchEnrollList, user.id, defaultCategory]);
 
   useEffect(() => {
-    fetchEnrollList(user.id, selectedCategory);
+    fetchEnrollList(selectedCategory, user.id);
   }, [fetchEnrollList, user.id, selectedCategory]);
 
   return (

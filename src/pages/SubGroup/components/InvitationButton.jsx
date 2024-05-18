@@ -4,7 +4,7 @@ import { toast } from "react-toastify";
 
 const InvitationButtonContainer = styled.div`
   position: absolute;
-  top: 386px;
+  top: 426px;
   left: 0;
   width: 100%;
   display: flex;

@@ -1,11 +1,6 @@
 import { useState, useRef, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "@emotion/styled";
-import Dialog from "@mui/material/Dialog";
-import DialogActions from "@mui/material/DialogActions";
-import DialogContent from "@mui/material/DialogContent";
-import DialogTitle from "@mui/material/DialogTitle";
-import Button from "@mui/material/Button";
 import { toast } from "react-toastify";
 import comeGroupImg from "assets/comeGroup.png";
 import CommonButton from "components/CommonButton";
@@ -52,8 +47,6 @@ const PasswordContainer = styled.div`
 `;
 
 function JoinGroup() {
-  const [open, setOpen] = useState(false);
-  const [alertMessage, setAlertMessage] = useState("");
   const [isJoining, setIsJoining] = useState(false);
   const navigate = useNavigate();
   const passwordInputRef = useRef(null);
@@ -62,53 +55,65 @@ function JoinGroup() {
     passwordInputRef.current.focus();
   }, []);
 
-  const handleClickOpen = () => {
-    setOpen(true);
-  };
-
-  const handleClose = () => {
-    setOpen(false);
-    if (alertMessage === "가입 되었습니다.") {
-      setTimeout(() => {
-        navigate("/");
-      }, 300);
-    } else {
-      setTimeout(() => {
-        passwordInputRef.current.focus();
-      }, 0);
-    }
-  };
-
   const handleJoinGroup = () => {
     const userData = JSON.parse(window.sessionStorage.getItem("user"));
     const password = document.getElementById("비밀번호").value;
-    const ps = document.getElementById("비밀번호");
 
     if (!password) {
-      setAlertMessage("초대코드를 입력하세요");
-      handleClickOpen();
+      toast.error("초대코드를 입력하세요", {
+        position: "top-center",
+        autoClose: 500,
+        hideProgressBar: true,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        onClose: () => {
+          const ps = passwordInputRef.current;
+          ps.focus();
+          ps.select(); // 전체 선택
+        },
+      });
       return;
     }
 
     setIsJoining(true);
-
     const lastData = {
-      id: userData.id,
+      userId: userData.id,
       invitationCode: password,
     };
 
     api
-      .post("/group/join", lastData)
+      .post("/groups/members", lastData)
       .then(() => {
         toast.success("가입 되었습니다.", {
-          autoClose: 300,
+          position: "top-center",
+          autoClose: 500,
+          hideProgressBar: true,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
           onClose: () => navigate("/"),
         });
       })
       .catch((error) => {
-        setAlertMessage(error.response.data.message);
-        handleClickOpen();
+        toast.error(error.response.data.message, {
+          position: "top-center",
+          autoClose: 500,
+          hideProgressBar: true,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          onClose: () => {
+            const ps = passwordInputRef.current;
+            ps.focus();
+            ps.select(); // 전체 선택
+          },
+        });
         setIsJoining(false);
+        const ps = document.getElementById("비밀번호");
         ps.value = null;
         console.log(error);
       });
@@ -116,20 +121,6 @@ function JoinGroup() {
 
   return (
     <>
-      <Dialog
-        open={open}
-        onClose={handleClose}
-        aria-labelledby="alert-dialog-title"
-        aria-describedby="alert-dialog-description"
-      >
-        <DialogTitle id="alert-dialog-title">{alertMessage}</DialogTitle>
-        <DialogContent></DialogContent>
-        <DialogActions>
-          <Button onClick={handleClose} autoFocus>
-            확인
-          </Button>
-        </DialogActions>
-      </Dialog>
       <BackHeader text="썹 참여하기" />
       <ImgAndTextContainer>
         <div className="welcome-text">환영합니다</div>

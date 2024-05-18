@@ -85,6 +85,7 @@ const useAuthCheck = () => {
           console.log("30분 이상 비활동 상태, 로그아웃");
           sessionStorage.removeItem("accessToken");
           sessionStorage.removeItem("refreshToken");
+          sessionStorage.removeItem("user");
           setIsTokenVerified(false);
           navigate("/login");
           return;

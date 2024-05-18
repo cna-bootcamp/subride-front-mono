@@ -6,7 +6,7 @@ import { useState, useEffect, useCallback } from "react";
 
 const PaymentDetailSearchContainer = styled.div`
   position: absolute;
-  top: 426px;
+  top: 496px;
   left: 0px;
   width: 100%;
   display: flex;
@@ -39,7 +39,7 @@ const PaymentDetailSearchContainer = styled.div`
 
 const PaymentDetailContainer = styled.div`
   position: absolute;
-  top: 467.5px;
+  top: 540.5px;
   left: 0px;
   width: 100%;
   padding: 0 10px;
@@ -89,16 +89,28 @@ const PaymentDetail = ({ serviceData }) => {
   const handleFilterClick = (filter) => {
     setSelectedFilter(filter);
     if (filter === "3개월") {
-      const oneMonthAgo = new Date();
-      oneMonthAgo.setMonth(oneMonthAgo.getMonth() - 3);
+      const threeMonthsAgo = new Date();
+      threeMonthsAgo.setMonth(threeMonthsAgo.getMonth() - 3);
       const filteredData = serviceData.pays.filter((item) => {
         const paymentDate = new Date(item.payDateTime);
-        return paymentDate >= oneMonthAgo;
+        return paymentDate >= threeMonthsAgo;
       });
-      setFilteredPays(filteredData);
+      const sortedData = sortData(filteredData);
+      setFilteredPays(sortedData);
     } else if (filter === "전체") {
-      setFilteredPays(serviceData.pays);
+      const sortedData = sortData(serviceData.pays);
+      setFilteredPays(sortedData);
     }
+  };
+  
+  const sortData = (data) => {
+    return [...data].sort((a, b) => {
+      if (sortOrder === "desc") {
+        return new Date(b.payDateTime) - new Date(a.payDateTime);
+      } else {
+        return new Date(a.payDateTime) - new Date(b.payDateTime);
+      }
+    });
   };
 
   const handleSortClick = () => {

@@ -5,24 +5,32 @@ import api from "utils/apiInstance";
 import GroupInfo from "./components/GroupInfo";
 import InvitationButtonComponent from "./components/InvitationButton";
 import PaymentDetail from "./components/PaymentDetail";
+import Navigation from "components/Navigation";
 
-function GroupDetail() {
+function GroupDetail({ user }) {
   const location = useLocation();
   const groupId = location.state?.groupId || null;
-
   const [serviceData, setServiceData] = useState({
-    subscribeDTO: { logo: "", serviceName: "", description: "", maxUser: 0 },
+    subscribeDTO: {
+      logo: "",
+      serviceName: "",
+      description: "",
+      maxUser: 0,
+    },
     users: [],
     groupName: "",
     billingDate: 0,
     pays: [],
+    leaderUserId: null, // leaderUserId 추가
   });
 
   const getServiceData = useCallback(async () => {
     try {
       if (groupId !== null) {
-        const { data } = await api.get("/group/detail", {
-          params: { id: groupId },
+        const { data } = await api.get("/groups/" + groupId, {
+          params: {
+            include: "subscribe,users,pays"
+          }
         });
         setServiceData(data);
       }
@@ -35,12 +43,16 @@ function GroupDetail() {
     getServiceData();
   }, [getServiceData]);
 
+  // user.id와 serviceData.leaderUserId 비교
+  const isLeader = user.id === serviceData.leaderUserId;
+
   return (
     <>
-      <BackHeader text={serviceData.groupName}></BackHeader>
+      <BackHeader text="썹 그룹 상세"></BackHeader>
       <GroupInfo serviceData={serviceData} />
       <InvitationButtonComponent serviceData={serviceData} />
-      <PaymentDetail serviceData={serviceData} />
+      {isLeader && <PaymentDetail serviceData={serviceData} />}
+      <Navigation />
     </>
   );
 }
