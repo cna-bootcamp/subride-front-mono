@@ -1,11 +1,11 @@
-import { useEffect, useState } from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
-import styled from '@emotion/styled';
-import { Button } from '@mui/material';
-import { toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
-import api from 'utils/apiInstance';
-import BackHeader from 'components/BackHeader';
+import { useEffect, useState } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
+import styled from "@emotion/styled";
+import { Button } from "@mui/material";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import api from "utils/apiInstance";
+import BackHeader from "components/BackHeader";
 import Navigation from "components/Navigation";
 
 const ServiceDetailContainer = styled.div`
@@ -83,6 +83,19 @@ const SubscribeButton = styled(Button)`
   }
 `;
 
+const UnsubscribeButton = styled(Button)`
+  && {
+    background-color: #f0f0f0;
+    color: #666;
+    font-size: 0.9rem;
+    padding: 0.4rem 0.8rem;
+    margin-top: 0.5rem;
+    &:hover {
+      background-color: #e0e0e0;
+    }
+  }
+`;
+
 function ServiceDetail({ user }) {
   const location = useLocation();
   const navigate = useNavigate();
@@ -94,7 +107,7 @@ function ServiceDetail({ user }) {
   useEffect(() => {
     const fetchService = async () => {
       try {
-        const { data } = await api.get("/subscriptions/"+serviceId);
+        const { data } = await api.get("/subscriptions/" + serviceId);
         setService(data);
       } catch (err) {
         console.error(err);
@@ -114,12 +127,14 @@ function ServiceDetail({ user }) {
         subscribeId: service.serviceId,
         billingDate: 5, // 예시로 5일로 설정
       };
-      const { data } = await api.post('/subscriptions/members', requestBody);
+      const { data } = await api.post("/subscriptions/members", requestBody);
       toast.success(data.message, {
         onClose: () =>
-          navigate('/subscription/mysubscription', { state: { from: '/subscription/service/' + serviceId } }),
-        
-        position: 'top-center',
+          navigate("/subscription/mysubscription", {
+            state: { from: "/subscription/service/" + serviceId },
+          }),
+
+        position: "top-center",
         autoClose: 300, //  자동으로 사라짐
         hideProgressBar: true, // 진행바 숨김
         closeOnClick: true, // 클릭 시 닫힘
@@ -127,8 +142,34 @@ function ServiceDetail({ user }) {
         draggable: false, // 드래그 가능
       });
     } catch (err) {
-      toast.error('구독 등록에 실패했습니다.', { autoClose: 300 });
+      toast.error(err.response.data, { autoClose: 300 });
       setIsLoading(false);
+    }
+  };
+
+  const handleUnsubscribe = async () => {
+    try {
+      const response = await api.delete(
+        `/subscriptions/${serviceId}?userId=${user.id}`
+      );
+      if (response.status === 200) {
+        toast.success(response.data, {
+          autoClose: 300,
+          onClose: () => {
+            console.log("====> go back!!!!");
+            navigate(-1);
+          },
+        });
+      } else {
+        toast.error(response.data, {
+          autoClose: 500, // 0.5초 후 자동으로 닫힘
+          // 기타 옵션은 유지
+        });
+      }
+    } catch (err) {
+      toast.error(err.response.data || "구독 취소에 실패했습니다.", {
+        autoClose: 500,
+      });
     }
   };
 
@@ -149,13 +190,18 @@ function ServiceDetail({ user }) {
         <Description>{service.description}</Description>
         <FeeContainer>
           <FeeLabel>금액:</FeeLabel>
-          <FeeAmount>{service.fee.toLocaleString('ko-KR')}원</FeeAmount>
+          <FeeAmount>{service.fee.toLocaleString("ko-KR")}원</FeeAmount>
         </FeeContainer>
         <MaxUser>최대 {service.maxUser}명 공유 가능</MaxUser>
         {!alreadyEnroll && (
           <SubscribeButton onClick={handleSubscribe} disabled={isLoading}>
-            {isLoading ? '구독 중...' : '구독하기'}
+            {isLoading ? "구독 중..." : "구독하기"}
           </SubscribeButton>
+        )}
+        {alreadyEnroll && (
+          <UnsubscribeButton onClick={handleUnsubscribe}>
+            구독 취소
+          </UnsubscribeButton>
         )}
       </ServiceDetailContainer>
       <Navigation />

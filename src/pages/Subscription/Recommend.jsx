@@ -114,7 +114,7 @@ function Recommend({ user }) {
             구독서비스 추천
           </span>
         </p>
-        <p className="sub-title">이번 달 생필품에 81,000원을 지출했어요</p>
+        <p className="sub-title">지난 한달 생활요금에 281,000원을 지출했어요</p>
       </RecommendPage>
 
       <Grid container spacing={2} sx={{ mt: 4 }}>

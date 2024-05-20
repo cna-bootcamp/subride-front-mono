@@ -1,9 +1,10 @@
 // useAuthCheck.js
-import { useState, useEffect, useCallback } from 'react';
-import { useNavigate } from 'react-router-dom';
-import api from 'utils/apiInstance';
+import { useState, useEffect, useCallback } from "react";
+import { useNavigate } from "react-router-dom";
+import api from "utils/apiInstance";
 
-const tokenRequestInterval = process.env.TOKEN_REQUEST_INTERVAL || 30 * 60 * 1000;
+const tokenRequestInterval =
+  process.env.TOKEN_REQUEST_INTERVAL || 30 * 60 * 1000;
 const idleTime = process.env.IDLE_TIME || 10 * 60 * 1000;
 
 const useAuthCheck = () => {
@@ -18,6 +19,7 @@ const useAuthCheck = () => {
 
     if (currentPath === "/login" || currentPath === "/signup") {
       setIsTokenVerified(true);
+      return true;
     } else if (token) {
       try {
         const { data } = await api.post("/auth/verify", { token });
@@ -60,18 +62,17 @@ const useAuthCheck = () => {
     fetchVerifyToken();
   }, [fetchVerifyToken]);
 
-  
   useEffect(() => {
     const handleUserActivity = () => {
       setLastActiveTime(new Date());
     };
-  
-    window.addEventListener('mousemove', handleUserActivity);
-    window.addEventListener('keydown', handleUserActivity);
-  
+
+    window.addEventListener("mousemove", handleUserActivity);
+    window.addEventListener("keydown", handleUserActivity);
+
     return () => {
-      window.removeEventListener('mousemove', handleUserActivity);
-      window.removeEventListener('keydown', handleUserActivity);
+      window.removeEventListener("mousemove", handleUserActivity);
+      window.removeEventListener("keydown", handleUserActivity);
     };
   }, []);
 

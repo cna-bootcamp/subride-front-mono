@@ -146,7 +146,7 @@ function MySubscription({ user }) {
             </p>
         </div>
         <List sx={{ width: "100%" }}>
-          {canSubList.length > 0 ? (
+          {mySubscriptionList.length > 0 ? (
             mySubscriptionList.map((item, index) => (
               <div key={item.serviceId} className="list-item">
                 <div className="clickable" onClick={() => handleServiceClick(item.serviceId)}>
