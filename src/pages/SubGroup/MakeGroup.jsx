@@ -65,7 +65,7 @@ function MakeGroup({ user }) {
         groupAccount: representativeAccount,
         leaderUserId: user.id,
         groupName,
-        subscribeName: selectedService?.serviceName,
+        subscribeId: selectedService?.serviceId,
         billingDate: payDate,
       };
 

@@ -50,7 +50,7 @@ function GroupDetail({ user }) {
     <>
       <BackHeader text="썹 그룹 상세"></BackHeader>
       <GroupInfo serviceData={serviceData} />
-      <InvitationButtonComponent serviceData={serviceData} />
+      <InvitationButtonComponent serviceData={serviceData} user={user} />
       {isLeader && <PaymentDetail serviceData={serviceData} />}
       <Navigation />
     </>

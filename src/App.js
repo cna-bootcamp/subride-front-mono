@@ -1,6 +1,6 @@
 // App.js
 import { useState, useEffect, useCallback } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 import useAuthCheck from "utils/useAuthCheck";
 import AppRoutes from "routes";
@@ -8,6 +8,7 @@ import AppRoutes from "routes";
 function App() {
   const [user, setUser] = useState(null);
   const navigate = useNavigate();
+  const location = useLocation();
   const isTokenVerified = useAuthCheck();
 
   useEffect(() => {
@@ -25,7 +26,7 @@ function App() {
 
   return (
     <>
-      {isTokenVerified ? (
+      {isTokenVerified || location.pathname === "/login" ? (
         <AppRoutes user={user} handleAfterLogin={handleAfterLogin} />
       ) : (
         <div>Loading...</div>

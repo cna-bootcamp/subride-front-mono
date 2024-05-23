@@ -7,6 +7,11 @@ import "react-toastify/dist/ReactToastify.css";
 import api from "utils/apiInstance";
 import BackHeader from "components/BackHeader";
 import Navigation from "components/Navigation";
+import Dialog from "@mui/material/Dialog";
+import DialogActions from "@mui/material/DialogActions";
+import DialogContent from "@mui/material/DialogContent";
+import DialogContentText from "@mui/material/DialogContentText";
+import DialogTitle from "@mui/material/DialogTitle";
 
 const ServiceDetailContainer = styled.div`
   margin: 30px;
@@ -103,6 +108,15 @@ function ServiceDetail({ user }) {
   const alreadyEnroll = location.state?.alreadyEnroll || false;
   const [service, setService] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
+  const [openConfirmDialog, setOpenConfirmDialog] = useState(false);
+
+  const handleOpenConfirmDialog = () => {
+    setOpenConfirmDialog(true);
+  };
+
+  const handleCloseConfirmDialog = () => {
+    setOpenConfirmDialog(false);
+  };
 
   useEffect(() => {
     const fetchService = async () => {
@@ -147,7 +161,7 @@ function ServiceDetail({ user }) {
     }
   };
 
-  const handleUnsubscribe = async () => {
+  const handleConfirmUnsubscribe = async () => {
     try {
       const response = await api.delete(
         `/subscriptions/${serviceId}?userId=${user.id}`
@@ -162,8 +176,7 @@ function ServiceDetail({ user }) {
         });
       } else {
         toast.error(response.data, {
-          autoClose: 500, // 0.5초 후 자동으로 닫힘
-          // 기타 옵션은 유지
+          autoClose: 500,
         });
       }
     } catch (err) {
@@ -171,6 +184,7 @@ function ServiceDetail({ user }) {
         autoClose: 500,
       });
     }
+    handleCloseConfirmDialog();
   };
 
   if (!service) {
@@ -199,12 +213,27 @@ function ServiceDetail({ user }) {
           </SubscribeButton>
         )}
         {alreadyEnroll && (
-          <UnsubscribeButton onClick={handleUnsubscribe}>
+          <UnsubscribeButton onClick={handleOpenConfirmDialog}>
             구독 취소
           </UnsubscribeButton>
         )}
       </ServiceDetailContainer>
       <Navigation />
+
+      <Dialog open={openConfirmDialog} onClose={handleCloseConfirmDialog}>
+        <DialogTitle>구독 취소 확인</DialogTitle>
+        <DialogContent>
+          <DialogContentText>정말 구독을 취소하시겠습니까?</DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleCloseConfirmDialog} color="primary">
+            취소
+          </Button>
+          <Button onClick={handleConfirmUnsubscribe} color="primary" autoFocus>
+            확인
+          </Button>
+        </DialogActions>
+      </Dialog>
     </>
   );
 }
