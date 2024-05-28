@@ -11,7 +11,7 @@ import { Visibility, VisibilityOff } from "@mui/icons-material";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import api from "utils/apiInstance"; // apiInstance 임포트
+import api from "utils/apiInstance";
 
 const generateRandomAccountNumber = () => {
   const bankCode = Math.floor(Math.random() * (999 - 100 + 1)) + 100;
@@ -140,7 +140,7 @@ const Signup = () => {
       <form onSubmit={handleSubmit}>
         <TextField
           label="사용자 ID"
-          value=""
+          value={userId}
           onChange={(e) => setUserId(e.target.value)}
           error={!!errors.userId}
           helperText={errors.userId}
@@ -151,7 +151,7 @@ const Signup = () => {
         <TextField
           label="암호"
           type={showPassword ? "text" : "password"}
-          value=""
+          value={password}
           onChange={(e) => setPassword(e.target.value)}
           error={!!errors.password}
           helperText={errors.password}
